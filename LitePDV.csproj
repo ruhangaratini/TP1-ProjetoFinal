@@ -59,6 +59,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
+    <Compile Include="View\CustomerView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\CustomerView.Designer.cs">
+      <DependentUpon>CustomerView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\DashboardView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\DashboardView.Designer.cs">
+      <DependentUpon>DashboardView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\ProductView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\ProductView.Designer.cs">
+      <DependentUpon>ProductView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\SaleView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="View\SaleView.Designer.cs">
+      <DependentUpon>SaleView.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="LitePDV.resx">
       <DependentUpon>LitePDV.cs</DependentUpon>
     </EmbeddedResource>
@@ -75,6 +99,12 @@
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\CustomerView.resx">
+      <DependentUpon>CustomerView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\DashboardView.resx">
+      <DependentUpon>DashboardView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
