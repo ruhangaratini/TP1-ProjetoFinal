@@ -53,10 +53,10 @@
     <Compile Include="LitePDV.Designer.cs">
       <DependentUpon>LitePDV.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Produto.cs" />
+    <Compile Include="Model\Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\ProdutoRepository.cs" />
+    <Compile Include="Repository\ProductRepository.cs" />
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -108,6 +108,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\DashboardView.resx">
       <DependentUpon>DashboardView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\ProductView.resx">
+      <DependentUpon>ProductView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\SaleView.resx">
+      <DependentUpon>SaleView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -32,23 +32,23 @@
             this.sideBarMenu = new System.Windows.Forms.FlowLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.MenuDashboard = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.MenuCustomer = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
             this.MainScreen = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.MenuDashboard = new System.Windows.Forms.Button();
+            this.MenuCustomer = new System.Windows.Forms.Button();
+            this.MenuProduct = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.sideBarMenu.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // sideBarMenu
@@ -87,6 +87,51 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Menu";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.MenuDashboard);
+            this.panel1.Location = new System.Drawing.Point(0, 95);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(183, 51);
+            this.panel1.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.MenuCustomer);
+            this.panel3.Location = new System.Drawing.Point(0, 146);
+            this.panel3.Margin = new System.Windows.Forms.Padding(0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(183, 51);
+            this.panel3.TabIndex = 3;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.MenuProduct);
+            this.panel4.Location = new System.Drawing.Point(0, 197);
+            this.panel4.Margin = new System.Windows.Forms.Padding(0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(183, 51);
+            this.panel4.TabIndex = 2;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.button4);
+            this.panel5.Location = new System.Drawing.Point(0, 248);
+            this.panel5.Margin = new System.Windows.Forms.Padding(0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(183, 51);
+            this.panel5.TabIndex = 3;
+            // 
+            // MainScreen
+            // 
+            this.MainScreen.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MainScreen.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainScreen.Location = new System.Drawing.Point(183, 0);
+            this.MainScreen.Name = "MainScreen";
+            this.MainScreen.Size = new System.Drawing.Size(889, 632);
+            this.MainScreen.TabIndex = 1;
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -100,15 +145,6 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click_1);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.MenuDashboard);
-            this.panel1.Location = new System.Drawing.Point(0, 95);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(183, 51);
-            this.panel1.TabIndex = 1;
             // 
             // MenuDashboard
             // 
@@ -126,15 +162,6 @@
             this.MenuDashboard.UseVisualStyleBackColor = false;
             this.MenuDashboard.Click += new System.EventHandler(this.MenuDashboard_Click);
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.MenuCustomer);
-            this.panel3.Location = new System.Drawing.Point(0, 146);
-            this.panel3.Margin = new System.Windows.Forms.Padding(0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(183, 51);
-            this.panel3.TabIndex = 3;
-            // 
             // MenuCustomer
             // 
             this.MenuCustomer.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -151,38 +178,21 @@
             this.MenuCustomer.UseVisualStyleBackColor = false;
             this.MenuCustomer.Click += new System.EventHandler(this.MenuCustomer_Click);
             // 
-            // panel4
+            // MenuProduct
             // 
-            this.panel4.Controls.Add(this.button3);
-            this.panel4.Location = new System.Drawing.Point(0, 197);
-            this.panel4.Margin = new System.Windows.Forms.Padding(0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(183, 51);
-            this.panel4.TabIndex = 2;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.button3.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Image = global::LitePDV.Properties.Resources.product;
-            this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button3.Location = new System.Drawing.Point(-36, -14);
-            this.button3.Name = "button3";
-            this.button3.Padding = new System.Windows.Forms.Padding(50, 0, 0, 0);
-            this.button3.Size = new System.Drawing.Size(242, 79);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "          Produtos";
-            this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button3.UseVisualStyleBackColor = false;
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.button4);
-            this.panel5.Location = new System.Drawing.Point(0, 248);
-            this.panel5.Margin = new System.Windows.Forms.Padding(0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(183, 51);
-            this.panel5.TabIndex = 3;
+            this.MenuProduct.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuProduct.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MenuProduct.Image = global::LitePDV.Properties.Resources.product;
+            this.MenuProduct.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MenuProduct.Location = new System.Drawing.Point(-36, -14);
+            this.MenuProduct.Name = "MenuProduct";
+            this.MenuProduct.Padding = new System.Windows.Forms.Padding(50, 0, 0, 0);
+            this.MenuProduct.Size = new System.Drawing.Size(242, 79);
+            this.MenuProduct.TabIndex = 2;
+            this.MenuProduct.Text = "          Produtos";
+            this.MenuProduct.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.MenuProduct.UseVisualStyleBackColor = false;
+            this.MenuProduct.Click += new System.EventHandler(this.MenuProduct_Click);
             // 
             // button4
             // 
@@ -199,15 +209,6 @@
             this.button4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button4.UseVisualStyleBackColor = false;
             // 
-            // MainScreen
-            // 
-            this.MainScreen.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.MainScreen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainScreen.Location = new System.Drawing.Point(183, 0);
-            this.MainScreen.Name = "MainScreen";
-            this.MainScreen.Size = new System.Drawing.Size(889, 632);
-            this.MainScreen.TabIndex = 1;
-            // 
             // LitePDV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -222,11 +223,11 @@
             this.sideBarMenu.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -240,7 +241,7 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button MenuCustomer;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button MenuProduct;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.PictureBox pictureBox1;

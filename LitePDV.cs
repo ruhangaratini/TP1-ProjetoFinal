@@ -48,5 +48,10 @@ namespace LitePDV
         {
             this.setMainScreen(new CustomerView());
         }
+
+        private void MenuProduct_Click(object sender, EventArgs e)
+        {
+            this.setMainScreen(new ProductView());
+        }
     }
 }
