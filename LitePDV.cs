@@ -1,4 +1,5 @@
-﻿using LitePDV.View;
+﻿using LitePDV.Model;
+using LitePDV.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,6 +30,18 @@ namespace LitePDV
             this.MainScreen.Controls.Add(control);
         }
 
+        public void showModal(Form form)
+        {
+            if(!(form is Modal))
+            {
+                return;
+            }
+
+            (form as Modal).setParentWindow(this);
+            form.WindowState = FormWindowState.Normal;
+            form.ShowDialog();
+        }
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
@@ -52,6 +65,21 @@ namespace LitePDV
         private void MenuProduct_Click(object sender, EventArgs e)
         {
             this.setMainScreen(new ProductView());
+        }
+
+        private void MenuSale_Click(object sender, EventArgs e)
+        {
+            this.setMainScreen(new SaleView());
+        }
+
+        private void LitePDV_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainScreen_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
