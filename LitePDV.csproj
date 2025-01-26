@@ -53,7 +53,6 @@
     <Compile Include="LitePDV.Designer.cs">
       <DependentUpon>LitePDV.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Modal.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,6 +85,18 @@
     </Compile>
     <Compile Include="View\RegisterCustomerModal.Designer.cs">
       <DependentUpon>RegisterCustomerModal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\RegisterProductModal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\RegisterProductModal.Designer.cs">
+      <DependentUpon>RegisterProductModal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\RegisterSaleModal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\RegisterSaleModal.Designer.cs">
+      <DependentUpon>RegisterSaleModal.cs</DependentUpon>
     </Compile>
     <Compile Include="View\SaleView.cs">
       <SubType>UserControl</SubType>
@@ -121,6 +132,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\RegisterCustomerModal.resx">
       <DependentUpon>RegisterCustomerModal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\RegisterProductModal.resx">
+      <DependentUpon>RegisterProductModal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\RegisterSaleModal.resx">
+      <DependentUpon>RegisterSaleModal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\SaleView.resx">
       <DependentUpon>SaleView.cs</DependentUpon>

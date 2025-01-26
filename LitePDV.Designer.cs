@@ -29,42 +29,42 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LitePDV));
-            this.sideBarMenu = new System.Windows.Forms.FlowLayoutPanel();
+            this.SideBarMenu = new System.Windows.Forms.FlowLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.MenuDashboard = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.MenuCustomer = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.MenuProduct = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.MenuSale = new System.Windows.Forms.Button();
             this.MainScreen = new System.Windows.Forms.Panel();
-            this.sideBarMenu.SuspendLayout();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.MenuDashboard = new System.Windows.Forms.Button();
+            this.MenuCustomer = new System.Windows.Forms.Button();
+            this.MenuProduct = new System.Windows.Forms.Button();
+            this.MenuSale = new System.Windows.Forms.Button();
+            this.SideBarMenu.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // sideBarMenu
+            // SideBarMenu
             // 
-            this.sideBarMenu.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.sideBarMenu.Controls.Add(this.panel2);
-            this.sideBarMenu.Controls.Add(this.panel1);
-            this.sideBarMenu.Controls.Add(this.panel3);
-            this.sideBarMenu.Controls.Add(this.panel4);
-            this.sideBarMenu.Controls.Add(this.panel5);
-            this.sideBarMenu.Dock = System.Windows.Forms.DockStyle.Left;
-            this.sideBarMenu.Location = new System.Drawing.Point(0, 0);
-            this.sideBarMenu.Margin = new System.Windows.Forms.Padding(0);
-            this.sideBarMenu.Name = "sideBarMenu";
-            this.sideBarMenu.Size = new System.Drawing.Size(183, 661);
-            this.sideBarMenu.TabIndex = 0;
+            this.SideBarMenu.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.SideBarMenu.Controls.Add(this.panel2);
+            this.SideBarMenu.Controls.Add(this.panel1);
+            this.SideBarMenu.Controls.Add(this.panel3);
+            this.SideBarMenu.Controls.Add(this.panel4);
+            this.SideBarMenu.Controls.Add(this.panel5);
+            this.SideBarMenu.Dock = System.Windows.Forms.DockStyle.Left;
+            this.SideBarMenu.Location = new System.Drawing.Point(0, 0);
+            this.SideBarMenu.Margin = new System.Windows.Forms.Padding(0);
+            this.SideBarMenu.Name = "SideBarMenu";
+            this.SideBarMenu.Size = new System.Drawing.Size(183, 661);
+            this.SideBarMenu.TabIndex = 0;
             // 
             // panel2
             // 
@@ -87,6 +87,53 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Menu";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.MenuDashboard);
+            this.panel1.Location = new System.Drawing.Point(0, 95);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(183, 51);
+            this.panel1.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.MenuCustomer);
+            this.panel3.Location = new System.Drawing.Point(0, 146);
+            this.panel3.Margin = new System.Windows.Forms.Padding(0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(183, 51);
+            this.panel3.TabIndex = 3;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.MenuProduct);
+            this.panel4.Location = new System.Drawing.Point(0, 197);
+            this.panel4.Margin = new System.Windows.Forms.Padding(0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(183, 51);
+            this.panel4.TabIndex = 2;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.MenuSale);
+            this.panel5.Location = new System.Drawing.Point(0, 248);
+            this.panel5.Margin = new System.Windows.Forms.Padding(0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(183, 51);
+            this.panel5.TabIndex = 3;
+            // 
+            // MainScreen
+            // 
+            this.MainScreen.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.MainScreen.BackColor = System.Drawing.SystemColors.Control;
+            this.MainScreen.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainScreen.Location = new System.Drawing.Point(183, 0);
+            this.MainScreen.Name = "MainScreen";
+            this.MainScreen.Size = new System.Drawing.Size(1001, 661);
+            this.MainScreen.TabIndex = 1;
+            this.MainScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.MainScreen_Paint);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -101,18 +148,11 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click_1);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.MenuDashboard);
-            this.panel1.Location = new System.Drawing.Point(0, 95);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(183, 51);
-            this.panel1.TabIndex = 1;
-            // 
             // MenuDashboard
             // 
             this.MenuDashboard.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuDashboard.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
+            this.MenuDashboard.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MenuDashboard.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MenuDashboard.Image = ((System.Drawing.Image)(resources.GetObject("MenuDashboard.Image")));
             this.MenuDashboard.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -126,18 +166,11 @@
             this.MenuDashboard.UseVisualStyleBackColor = false;
             this.MenuDashboard.Click += new System.EventHandler(this.MenuDashboard_Click);
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.MenuCustomer);
-            this.panel3.Location = new System.Drawing.Point(0, 146);
-            this.panel3.Margin = new System.Windows.Forms.Padding(0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(183, 51);
-            this.panel3.TabIndex = 3;
-            // 
             // MenuCustomer
             // 
             this.MenuCustomer.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuCustomer.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
+            this.MenuCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MenuCustomer.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MenuCustomer.Image = global::LitePDV.Properties.Resources.person;
             this.MenuCustomer.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -151,18 +184,11 @@
             this.MenuCustomer.UseVisualStyleBackColor = false;
             this.MenuCustomer.Click += new System.EventHandler(this.MenuCustomer_Click);
             // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.MenuProduct);
-            this.panel4.Location = new System.Drawing.Point(0, 197);
-            this.panel4.Margin = new System.Windows.Forms.Padding(0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(183, 51);
-            this.panel4.TabIndex = 2;
-            // 
             // MenuProduct
             // 
             this.MenuProduct.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuProduct.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
+            this.MenuProduct.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MenuProduct.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MenuProduct.Image = global::LitePDV.Properties.Resources.product;
             this.MenuProduct.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -176,18 +202,11 @@
             this.MenuProduct.UseVisualStyleBackColor = false;
             this.MenuProduct.Click += new System.EventHandler(this.MenuProduct_Click);
             // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.MenuSale);
-            this.panel5.Location = new System.Drawing.Point(0, 248);
-            this.panel5.Margin = new System.Windows.Forms.Padding(0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(183, 51);
-            this.panel5.TabIndex = 3;
-            // 
             // MenuSale
             // 
             this.MenuSale.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuSale.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.Control;
+            this.MenuSale.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MenuSale.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MenuSale.Image = global::LitePDV.Properties.Resources.sale;
             this.MenuSale.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -201,17 +220,6 @@
             this.MenuSale.UseVisualStyleBackColor = false;
             this.MenuSale.Click += new System.EventHandler(this.MenuSale_Click);
             // 
-            // MainScreen
-            // 
-            this.MainScreen.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.MainScreen.BackColor = System.Drawing.SystemColors.Control;
-            this.MainScreen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainScreen.Location = new System.Drawing.Point(183, 0);
-            this.MainScreen.Name = "MainScreen";
-            this.MainScreen.Size = new System.Drawing.Size(1001, 661);
-            this.MainScreen.TabIndex = 1;
-            this.MainScreen.Paint += new System.Windows.Forms.PaintEventHandler(this.MainScreen_Paint);
-            // 
             // LitePDV
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -219,28 +227,28 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1184, 661);
             this.Controls.Add(this.MainScreen);
-            this.Controls.Add(this.sideBarMenu);
+            this.Controls.Add(this.SideBarMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.IsMdiContainer = true;
             this.MaximizeBox = false;
             this.Name = "LitePDV";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "LitePDV";
             this.Load += new System.EventHandler(this.LitePDV_Load);
-            this.sideBarMenu.ResumeLayout(false);
+            this.SideBarMenu.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.FlowLayoutPanel sideBarMenu;
+        private System.Windows.Forms.FlowLayoutPanel SideBarMenu;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button MenuDashboard;
         private System.Windows.Forms.Panel panel2;

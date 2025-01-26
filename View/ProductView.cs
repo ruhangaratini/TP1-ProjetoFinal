@@ -16,5 +16,20 @@ namespace LitePDV.View
         {
             InitializeComponent();
         }
+
+        private void NewProductButton_Click(object sender, EventArgs e)
+        {
+            (this.Parent.Parent as LitePDV).showModal(new RegisterProductModal());
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NewProductButton_Click_1(object sender, EventArgs e)
+        {
+            (this.Parent.Parent as LitePDV).showModal(new RegisterProductModal());
+        }
     }
 }

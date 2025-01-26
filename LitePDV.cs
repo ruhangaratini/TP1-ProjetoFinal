@@ -20,10 +20,23 @@ namespace LitePDV
             InitializeComponent();
         }
 
-        private void setMainScreen(UserControl control)
+        private void setMainScreen(Button sender, UserControl control)
         {
-            if (control == null)
+            if (control == null || sender == null)
                 return;
+
+            foreach (Panel p in this.SideBarMenu.Controls.OfType<Panel>())
+            {
+                foreach (Control c in p.Controls)
+                {
+                    if(c.Name.Contains("Menu"))
+                    {
+                        c.BackColor = SystemColors.ControlLight;
+                    }
+                }
+            }
+
+            sender.BackColor = SystemColors.Control;
 
             control.Dock = DockStyle.Fill;
             this.MainScreen.Controls.Clear();
@@ -32,12 +45,8 @@ namespace LitePDV
 
         public void showModal(Form form)
         {
-            if(!(form is Modal))
-            {
-                return;
-            }
-
-            (form as Modal).setParentWindow(this);
+            form.BackColor = SystemColors.ControlLightLight;
+            form.StartPosition = FormStartPosition.CenterScreen;
             form.WindowState = FormWindowState.Normal;
             form.ShowDialog();
         }
@@ -54,27 +63,27 @@ namespace LitePDV
 
         private void MenuDashboard_Click(object sender, EventArgs e)
         {
-            this.setMainScreen(new DashboardView());
+            this.setMainScreen((Button) sender, new DashboardView());
         }
 
         private void MenuCustomer_Click(object sender, EventArgs e)
         {
-            this.setMainScreen(new CustomerView());
+            this.setMainScreen((Button) sender, new CustomerView());
         }
 
         private void MenuProduct_Click(object sender, EventArgs e)
         {
-            this.setMainScreen(new ProductView());
+            this.setMainScreen((Button) sender, new ProductView());
         }
 
         private void MenuSale_Click(object sender, EventArgs e)
         {
-            this.setMainScreen(new SaleView());
+            this.setMainScreen((Button) sender, new SaleView());
         }
 
         private void LitePDV_Load(object sender, EventArgs e)
         {
-
+            this.setMainScreen(this.MenuDashboard, new DashboardView());
         }
 
         private void MainScreen_Paint(object sender, PaintEventArgs e)
