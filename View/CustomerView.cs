@@ -22,7 +22,12 @@ namespace LitePDV.View
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void NewCustomerButton_Click(object sender, EventArgs e)
+        {
+            (this.Parent.Parent as LitePDV).showModal(new RegisterCustomerModal());
+        }
+
+        private void CustomerView_Load(object sender, EventArgs e)
         {
 
         }

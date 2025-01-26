@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\Modal.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +88,12 @@
     </Compile>
     <Compile Include="View\ProductView.Designer.cs">
       <DependentUpon>ProductView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\RegisterCustomerModal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\RegisterCustomerModal.Designer.cs">
+      <DependentUpon>RegisterCustomerModal.cs</DependentUpon>
     </Compile>
     <Compile Include="View\SaleView.cs">
       <SubType>UserControl</SubType>
@@ -119,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\ProductView.resx">
       <DependentUpon>ProductView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\RegisterCustomerModal.resx">
+      <DependentUpon>RegisterCustomerModal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\SaleView.resx">
       <DependentUpon>SaleView.cs</DependentUpon>

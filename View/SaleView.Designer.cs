@@ -36,7 +36,7 @@
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.NewSaleButton = new System.Windows.Forms.Button();
             comboBox1 = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -65,7 +65,7 @@
             this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Padding = new System.Windows.Forms.Padding(30, 30, 0, 0);
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(476, 100);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(571, 100);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
             // label1
@@ -91,11 +91,11 @@
             this.flowLayoutPanel3.Controls.Add(this.label2);
             this.flowLayoutPanel3.Controls.Add(comboBox1);
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(476, 0);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(571, 0);
             this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Padding = new System.Windows.Forms.Padding(30, 30, 0, 0);
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(263, 100);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(240, 100);
             this.flowLayoutPanel3.TabIndex = 2;
             // 
             // label2
@@ -123,24 +123,24 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Location = new System.Drawing.Point(739, 0);
+            this.panel1.Controls.Add(this.NewSaleButton);
+            this.panel1.Location = new System.Drawing.Point(811, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(30, 30, 0, 0);
-            this.panel1.Size = new System.Drawing.Size(241, 97);
+            this.panel1.Size = new System.Drawing.Size(170, 97);
             this.panel1.TabIndex = 3;
             // 
-            // button1
+            // NewSaleButton
             // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(59, 51);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(128, 33);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Incluir Novo";
-            this.button1.UseVisualStyleBackColor = true;
+            this.NewSaleButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NewSaleButton.Location = new System.Drawing.Point(19, 51);
+            this.NewSaleButton.Margin = new System.Windows.Forms.Padding(0);
+            this.NewSaleButton.Name = "NewSaleButton";
+            this.NewSaleButton.Size = new System.Drawing.Size(128, 33);
+            this.NewSaleButton.TabIndex = 3;
+            this.NewSaleButton.Text = "Incluir Novo";
+            this.NewSaleButton.UseVisualStyleBackColor = true;
             // 
             // SaleView
             // 
@@ -168,6 +168,6 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button NewSaleButton;
     }
 }
