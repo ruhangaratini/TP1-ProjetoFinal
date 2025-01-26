@@ -1,33 +1,33 @@
-﻿using System;
+﻿using LitePDV.Checks;
+using LitePDV.Model;
+using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data;
 using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LitePDV.Model;
 
 namespace LitePDV.Repository
 {
-    class ProductRepository
+    internal class ClientRepository
     {
         private readonly string _connectionString;
 
-        public ProductRepository()
+        public ClientRepository()
         {
             _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
 
-        public List<Product> GetAll()
+        public List<Client> GetAll()
         {
             try
             {
-                var products = new List<Product>();
+                var clients = new List<Client>();
 
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "SELECT id, name, description, price, stockQuantity, status FROM PRODUCT";
+                    const string query = "SELECT * FROM CLIENT";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -37,17 +37,18 @@ namespace LitePDV.Repository
                         {
                             while (response.Read())
                             {
-                                var product = new Product
+                                var client = new Client
                                 (
                                     id: Convert.ToInt32(response["id"]),
                                     name: response["name"].ToString(),
-                                    description: response["description"].ToString(),
-                                    price: Convert.ToDouble(response["price"]),
-                                    stockQuantity: Convert.ToInt32(response["stockQuantity"]),
-                                    status: Convert.ToBoolean(response["status"])
+                                    email: response["email"].ToString(),
+                                    phone: response["phone"].ToString(),
+                                    smartphone: response["smartphone"].ToString(),
+                                    cpf: response["cpf"].ToString(),
+                                    rg: response["rg"].ToString()
                                 );
 
-                                products.Add(product);
+                                clients.Add(client);
                             }
                         }
 
@@ -55,23 +56,23 @@ namespace LitePDV.Repository
                     }
                 }
 
-                return products;
+                return clients;
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao buscar todos os produtos: {ex}");
+                throw new Exception($"Erro ao buscar todos os clientes: {ex}");
             }
         }
 
-        public Product GetById(int id)
+        public Client GetById(int id)
         {
             try
             {
-                Product product = null; 
+                Client client = null;
 
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "SELECT id, name, description, price, stockQuantity, status FROM PRODUCT WHERE id = @id";
+                    const string query = "SELECT * FROM CLIENT WHERE id = @id";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -83,14 +84,15 @@ namespace LitePDV.Repository
                         {
                             if (reader.Read())
                             {
-                                product = new Product
+                                client = new Client
                                 (
                                     id: Convert.ToInt32(reader["id"]),
                                     name: reader["name"].ToString(),
-                                    description: reader["description"].ToString(),
-                                    price: Convert.ToDouble(reader["price"]),
-                                    stockQuantity: Convert.ToInt32(reader["stockQuantity"]),
-                                    status: Convert.ToBoolean(reader["status"])
+                                    email: reader["email"].ToString(),
+                                    phone: reader["phone"].ToString(),
+                                    smartphone: reader["smartphone"].ToString(),
+                                    cpf: reader["phone"].ToString(),
+                                    rg: reader["phone"].ToString()
                                 );
                             }
                         }
@@ -99,29 +101,30 @@ namespace LitePDV.Repository
                     }
                 }
 
-                return product;
+                return client;
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao buscar o produto por id: {ex.Message}", ex);
+                throw new Exception($"Erro ao buscar o cliente por id: {ex.Message}", ex);
             }
         }
 
-        public void Insert(Product produto)
+        public void Insert(Client client)
         {
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "INSERT INTO PRODUCT (name, description, price, stockQuantity, status) VALUES(@name, @description, @price, @stockQuantity, @status)";
+                    const string query = "INSERT INTO CLIENT (name, email, phone, smartphone, cpf, rg) VALUES(@name, @email, @phone, @smartphone, @cpf, @rg)";
 
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@name", produto.name);
-                        command.Parameters.AddWithValue("@description", produto.description);
-                        command.Parameters.AddWithValue("@price", produto.price);
-                        command.Parameters.AddWithValue("@stockQuantity", produto.stockQuantity);
-                        command.Parameters.AddWithValue("@status", produto.status);
+                        command.Parameters.AddWithValue("@name", client.name);
+                        command.Parameters.AddWithValue("@email", client.email);
+                        command.Parameters.AddWithValue("@phone", client.phone);
+                        command.Parameters.AddWithValue("@smartphone", client.smartphone);
+                        command.Parameters.AddWithValue("@cpf", client.cpf);
+                        command.Parameters.AddWithValue("@rg", client.rg);
 
                         connection.Open();
                         command.ExecuteNonQuery();
@@ -131,26 +134,27 @@ namespace LitePDV.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro no insert product: {ex}");
+                throw new Exception($"Erro ao inserir o cliente: {ex}");
             }
         }
 
-        public void Update(Product produto)
+        public void Update(Client client) // verificar para casos de atualizações parciais
         {
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "UPDATE PRODUCT SET name = @name, description = @description, price = @price, stockQuantity = @stockQuantity, status = @status WHERE id = @id";
+                    const string query = "UPDATE CLIENT SET name = @name, email = @email, phone = @phone, smartphone = @smartphone, cpf = @cpf, rg = @rg WHERE id = @id";
 
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@name", produto.name);
-                        command.Parameters.AddWithValue("@description", produto.description);
-                        command.Parameters.AddWithValue("@price", produto.price);
-                        command.Parameters.AddWithValue("@stockQuantity", produto.stockQuantity);
-                        command.Parameters.AddWithValue("@status", produto.status);
-                        command.Parameters.AddWithValue("@id", produto.id);
+                        command.Parameters.AddWithValue("@name", client.name);
+                        command.Parameters.AddWithValue("@email", client.email);
+                        command.Parameters.AddWithValue("@phone", client.phone);
+                        command.Parameters.AddWithValue("@smartphone", client.smartphone);
+                        command.Parameters.AddWithValue("@cpf", client.cpf);
+                        command.Parameters.AddWithValue("@rg", client.rg);
+                        command.Parameters.AddWithValue("@id", client.id);
 
                         connection.Open();
                         command.ExecuteNonQuery();
@@ -160,7 +164,7 @@ namespace LitePDV.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro no update product: {ex}");
+                throw new Exception($"Erro ao atualizar o cliente: {ex}");
             }
         }
 
@@ -170,7 +174,7 @@ namespace LitePDV.Repository
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "DELETE FROM PRODUCT WHERE id = @id";
+                    const string query = "DELETE FROM CLIENT WHERE id = @id";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -186,9 +190,8 @@ namespace LitePDV.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao deletar o produto por id: {ex.Message}", ex);
+                throw new Exception($"Erro ao deletar o cliente por id: {ex.Message}", ex);
             }
         }
-
     }
 }

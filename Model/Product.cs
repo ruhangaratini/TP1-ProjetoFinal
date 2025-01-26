@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LitePDV.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,8 @@ namespace LitePDV.Model
         public double price { get; set; }
         public int stockQuantity { get; set; }
         public bool status { get; set; }
+
+        public Product() { }
 
         public Product(int id, string name, string description, double price, int stockQuantity, bool status)
         {
