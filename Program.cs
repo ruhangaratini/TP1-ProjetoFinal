@@ -17,31 +17,30 @@ namespace LitePDV
         //[STAThread]
         static void Main()
         {
-            var clientService = new ClientService();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new LitePDV());
+
+            //var clientService = new ClientService();
 
             // teste delete
-            try
-            {
-                bool client = clientService.DeleteById(3);
+            //try
+            //{
+            //    bool client = clientService.DeleteById(3);
 
-                if (client)
-                {
-                    Console.WriteLine("Cliente deletado com sucesso");
-                }
-                else
-                {
-                    Console.WriteLine("Não existe cliente com o ID informado. Verifique e tente novamente.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erro ao deletar o cliente: {ex.Message}");
-            }
-
-
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new LitePDV());
+            //    if (client)
+            //    {
+            //        Console.WriteLine("Cliente deletado com sucesso");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Não existe cliente com o ID informado. Verifique e tente novamente.");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine($"Erro ao deletar o cliente: {ex.Message}");
+            //}
         }
 
     }

@@ -19,7 +19,7 @@ namespace LitePDV.Service
         {
             var products = _repository.GetAll();
 
-            return products.Where(p => p.status).ToList();
+            return products.ToList();
         }
 
         public Product GetById(int id)
@@ -36,11 +36,10 @@ namespace LitePDV.Service
 
         public void Insert(Product product)
         {
-            string validation = _ValidateProduct(product);
+            string validation = _ValidateInsert(product);
 
             if (validation != "Ok")
                 throw new ArgumentNullException(nameof(product), validation);
-
             _repository.Insert(product);
         }
 
@@ -65,6 +64,23 @@ namespace LitePDV.Service
             }
 
             return false;
+        }
+
+        public string _ValidateInsert(Product product)
+        {
+            if (product == null)
+                return "O produto não pode ser nulo.";
+
+            if (product.name == null)
+                return "O nome no produto não pode ser nulo";
+
+            if (product.stockQuantity <= 0)
+                return "Quantidade do produto inválida.";
+
+            if (product.price <= 0)
+                return "O preço deve ser maior que zero.";
+
+            return "Ok";
         }
 
         public string _ValidateProduct(Product product)

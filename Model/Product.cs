@@ -14,28 +14,28 @@ namespace LitePDV.Model
         public string description { get; set; }
         public double price { get; set; }
         public int stockQuantity { get; set; }
-        public bool status { get; set; }
+        public string category { get; set; }
 
         public Product() { }
 
-        public Product(int id, string name, string description, double price, int stockQuantity, bool status)
+        public Product(int id, string name, string description, double price, int stockQuantity, string category)
         {
             this.id = id;
             this.name = name;
             this.description = description;
             this.price = price;
             this.stockQuantity = stockQuantity;
-            this.status = status;
+            this.category = category;
         }
 
-        public Product(string name, string description, double price, int stockQuantity, bool status)
+        public Product(string name, string description, double price, int stockQuantity, string category)
         {
             this.id = id;
             this.name = name;
             this.description = description;
             this.price = price;
             this.stockQuantity = stockQuantity;
-            this.status = status;
+            this.category = category;
         }
     }
 }

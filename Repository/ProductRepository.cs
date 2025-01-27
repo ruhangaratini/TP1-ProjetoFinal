@@ -27,7 +27,7 @@ namespace LitePDV.Repository
 
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "SELECT id, name, description, price, stockQuantity, status FROM PRODUCT";
+                    const string query = "SELECT * FROM PRODUCT";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -44,7 +44,7 @@ namespace LitePDV.Repository
                                     description: response["description"].ToString(),
                                     price: Convert.ToDouble(response["price"]),
                                     stockQuantity: Convert.ToInt32(response["stockQuantity"]),
-                                    status: Convert.ToBoolean(response["status"])
+                                    category: response["category"].ToString()
                                 );
 
                                 products.Add(product);
@@ -71,7 +71,7 @@ namespace LitePDV.Repository
 
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "SELECT id, name, description, price, stockQuantity, status FROM PRODUCT WHERE id = @id";
+                    const string query = "SELECT id, name, description, price, stockQuantity, category FROM PRODUCT WHERE id = @id";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -90,7 +90,7 @@ namespace LitePDV.Repository
                                     description: reader["description"].ToString(),
                                     price: Convert.ToDouble(reader["price"]),
                                     stockQuantity: Convert.ToInt32(reader["stockQuantity"]),
-                                    status: Convert.ToBoolean(reader["status"])
+                                    category: reader["category"].ToString()
                                 );
                             }
                         }
@@ -113,7 +113,7 @@ namespace LitePDV.Repository
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "INSERT INTO PRODUCT (name, description, price, stockQuantity, status) VALUES(@name, @description, @price, @stockQuantity, @status)";
+                    const string query = "INSERT INTO PRODUCT (name, description, price, stockQuantity, category) VALUES(@name, @description, @price, @stockQuantity, @category)";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -121,7 +121,7 @@ namespace LitePDV.Repository
                         command.Parameters.AddWithValue("@description", produto.description);
                         command.Parameters.AddWithValue("@price", produto.price);
                         command.Parameters.AddWithValue("@stockQuantity", produto.stockQuantity);
-                        command.Parameters.AddWithValue("@status", produto.status);
+                        command.Parameters.AddWithValue("@category", produto.category);
 
                         connection.Open();
                         command.ExecuteNonQuery();
@@ -141,7 +141,7 @@ namespace LitePDV.Repository
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "UPDATE PRODUCT SET name = @name, description = @description, price = @price, stockQuantity = @stockQuantity, status = @status WHERE id = @id";
+                    const string query = "UPDATE PRODUCT SET name = @name, description = @description, price = @price, stockQuantity = @stockQuantity, category = @category WHERE id = @id";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -149,7 +149,7 @@ namespace LitePDV.Repository
                         command.Parameters.AddWithValue("@description", produto.description);
                         command.Parameters.AddWithValue("@price", produto.price);
                         command.Parameters.AddWithValue("@stockQuantity", produto.stockQuantity);
-                        command.Parameters.AddWithValue("@status", produto.status);
+                        command.Parameters.AddWithValue("@status", produto.category);
                         command.Parameters.AddWithValue("@id", produto.id);
 
                         connection.Open();
