@@ -17,39 +17,39 @@ namespace LitePDV
         //[STAThread]
         static void Main()
         {
-            var orderService = new OrderService();
+            //var orderService = new OrderService();
 
-            var newOrder = new Order
-            (
-                paymentMethod: "Credit Card",
-                idClient: 1
-            );
+            //var newOrder = new Order
+            //(
+            //    paymentMethod: "Credit Card",
+            //    idClient: 1
+            //);
 
-            newOrder.items.Add(new OrderItem
-            (
-                id: 0,
-                quantity: 2,
-                unitPrice: 500,
-                subtotal: 1000,
-                idProduct: 1,
-                idOrder: 0
-            ));
+            //newOrder.items.Add(new OrderItem
+            //(
+            //    id: 0,
+            //    quantity: 2,
+            //    unitPrice: 500,
+            //    subtotal: 1000,
+            //    idProduct: 1,
+            //    idOrder: 0
+            //));
 
-            newOrder.items.Add(new OrderItem
-            (
-                id: 0,
-                quantity: 2,
-                unitPrice: 600,
-                subtotal: 1200,
-                idProduct: 2,
-                idOrder: 0
-            ));
+            //newOrder.items.Add(new OrderItem
+            //(
+            //    id: 0,
+            //    quantity: 2,
+            //    unitPrice: 600,
+            //    subtotal: 1200,
+            //    idProduct: 2,
+            //    idOrder: 0
+            //));
 
-            orderService.Insert(newOrder);
+            //orderService.Insert(newOrder);
 
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new LitePDV());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new LitePDV());
         }
 
     }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LitePDV.Model;
+using LitePDV.Service;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +14,11 @@ namespace LitePDV.View
 {
     public partial class RegisterProductModal : Form
     {
+        private readonly ProductService _service;
         public RegisterProductModal()
         {
             InitializeComponent();
+            _service = new ProductService();
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -30,6 +34,29 @@ namespace LitePDV.View
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            if (ProductNameInput.Text != null && PriceInput.Text != null && QuantityInput.Text != null)
+            {
+                Product product = new Product();
+                product.name = ProductNameInput.Text;
+                product.price = double.Parse(PriceInput.Text);
+                product.stockQuantity = int.Parse(QuantityInput.Text);
+                product.category = CategoryInput.Text;
+                product.description = descriptionBox.Text;
+
+                _service.Insert(product);
+                MessageBox.Show($"{product.name} inserido(a) com sucesso!");
+
+                ProductNameInput.ResetText();
+                CategoryInput.ResetText();
+                PriceInput.ResetText();
+                QuantityInput.ResetText();
+                descriptionBox.ResetText();
+                
+            }
         }
     }
 }

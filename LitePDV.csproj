@@ -56,6 +56,11 @@
     <Compile Include="LitePDV.Designer.cs">
       <DependentUpon>LitePDV.cs</DependentUpon>
     </Compile>
+    <Compile Include="LitePDVDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LitePDVDataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderItem.cs" />
@@ -154,6 +159,17 @@
     <EmbeddedResource Include="View\SaleView.resx">
       <DependentUpon>SaleView.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="LitePDVDataSet1.xsc">
+      <DependentUpon>LitePDVDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="LitePDVDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>LitePDVDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="LitePDVDataSet1.xss">
+      <DependentUpon>LitePDVDataSet1.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

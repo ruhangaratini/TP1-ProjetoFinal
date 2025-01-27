@@ -1,4 +1,8 @@
-﻿namespace LitePDV.View
+﻿using LitePDV.Model;
+using LitePDV.Service;
+using System.Data;
+
+namespace LitePDV.View
 {
     partial class CustomerView
     {
@@ -41,6 +45,7 @@
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             comboBox1 = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -48,6 +53,7 @@
             this.panel1.SuspendLayout();
             this.Header.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -58,9 +64,10 @@
             "ID",
             "Nome",
             "CPF"});
-            comboBox1.Location = new System.Drawing.Point(33, 24);
+            comboBox1.Location = new System.Drawing.Point(44, 32);
+            comboBox1.Margin = new System.Windows.Forms.Padding(4);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new System.Drawing.Size(176, 29);
+            comboBox1.Size = new System.Drawing.Size(233, 36);
             comboBox1.TabIndex = 1;
             comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -69,9 +76,10 @@
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel2);
             this.flowLayoutPanel1.Controls.Add(this.flowLayoutPanel3);
             this.flowLayoutPanel1.Controls.Add(this.panel1);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 69);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 85);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(986, 65);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1315, 80);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // flowLayoutPanel2
@@ -83,26 +91,28 @@
             this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(571, 65);
+            this.flowLayoutPanel2.Padding = new System.Windows.Forms.Padding(27, 0, 0, 0);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(761, 80);
             this.flowLayoutPanel2.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(23, 0);
+            this.label1.Location = new System.Drawing.Point(31, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 21);
+            this.label1.Size = new System.Drawing.Size(68, 28);
             this.label1.TabIndex = 0;
             this.label1.Text = "Buscar";
             // 
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(23, 24);
+            this.textBox1.Location = new System.Drawing.Point(31, 32);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(520, 29);
+            this.textBox1.Size = new System.Drawing.Size(692, 34);
             this.textBox1.TabIndex = 1;
             // 
             // flowLayoutPanel3
@@ -110,40 +120,41 @@
             this.flowLayoutPanel3.Controls.Add(this.label2);
             this.flowLayoutPanel3.Controls.Add(comboBox1);
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(571, 0);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(761, 0);
             this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(240, 65);
+            this.flowLayoutPanel3.Padding = new System.Windows.Forms.Padding(40, 0, 0, 0);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(320, 80);
             this.flowLayoutPanel3.TabIndex = 2;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(33, 0);
+            this.label2.Location = new System.Drawing.Point(44, 0);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 21);
+            this.label2.Size = new System.Drawing.Size(77, 28);
             this.label2.TabIndex = 0;
             this.label2.Text = "Critério";
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.NewCustomerButton);
-            this.panel1.Location = new System.Drawing.Point(811, 0);
+            this.panel1.Location = new System.Drawing.Point(1081, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(30, 0, 0, 0);
-            this.panel1.Size = new System.Drawing.Size(170, 65);
+            this.panel1.Padding = new System.Windows.Forms.Padding(40, 0, 0, 0);
+            this.panel1.Size = new System.Drawing.Size(227, 80);
             this.panel1.TabIndex = 3;
             // 
             // NewCustomerButton
             // 
             this.NewCustomerButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NewCustomerButton.Location = new System.Drawing.Point(20, 22);
+            this.NewCustomerButton.Location = new System.Drawing.Point(27, 27);
             this.NewCustomerButton.Margin = new System.Windows.Forms.Padding(0);
             this.NewCustomerButton.Name = "NewCustomerButton";
-            this.NewCustomerButton.Size = new System.Drawing.Size(128, 33);
+            this.NewCustomerButton.Size = new System.Drawing.Size(171, 41);
             this.NewCustomerButton.TabIndex = 3;
             this.NewCustomerButton.Text = "+ Incluir Novo";
             this.NewCustomerButton.UseVisualStyleBackColor = true;
@@ -156,8 +167,9 @@
             this.Header.Dock = System.Windows.Forms.DockStyle.Top;
             this.Header.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.Header.Location = new System.Drawing.Point(0, 0);
+            this.Header.Margin = new System.Windows.Forms.Padding(4);
             this.Header.Name = "Header";
-            this.Header.Size = new System.Drawing.Size(986, 137);
+            this.Header.Size = new System.Drawing.Size(1315, 169);
             this.Header.TabIndex = 1;
             // 
             // flowLayoutPanel4
@@ -165,11 +177,11 @@
             this.flowLayoutPanel4.Controls.Add(this.label3);
             this.flowLayoutPanel4.Controls.Add(this.label4);
             this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowLayoutPanel4.Location = new System.Drawing.Point(3, 10);
-            this.flowLayoutPanel4.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(4, 12);
+            this.flowLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 12, 4, 4);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Padding = new System.Windows.Forms.Padding(20, 0, 20, 0);
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(980, 53);
+            this.flowLayoutPanel4.Padding = new System.Windows.Forms.Padding(27, 0, 27, 0);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(1307, 65);
             this.flowLayoutPanel4.TabIndex = 3;
             // 
             // label3
@@ -178,9 +190,10 @@
             this.label3.BackColor = System.Drawing.SystemColors.Control;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label3.Location = new System.Drawing.Point(23, 0);
+            this.label3.Location = new System.Drawing.Point(31, 0);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(104, 32);
+            this.label3.Size = new System.Drawing.Size(130, 41);
             this.label3.TabIndex = 0;
             this.label3.Text = "Clientes";
             // 
@@ -188,19 +201,35 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(23, 32);
+            this.label4.Location = new System.Drawing.Point(31, 41);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(191, 17);
+            this.label4.Size = new System.Drawing.Size(246, 23);
             this.label4.TabIndex = 2;
             this.label4.Text = "Visualize todos os seus clientes";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(35, 206);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(1248, 272);
+            this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
             // CustomerView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.Header);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CustomerView";
-            this.Size = new System.Drawing.Size(986, 518);
+            this.Size = new System.Drawing.Size(1315, 638);
             this.Load += new System.EventHandler(this.CustomerView_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
@@ -211,6 +240,7 @@
             this.Header.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -229,5 +259,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
