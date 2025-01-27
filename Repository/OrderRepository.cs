@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Data.SqlOrder;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +26,16 @@ namespace LitePDV.Repository
 
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "SELECT * FROM ORDERS";
+                    const string query = @"SELECT
+                                o.id,
+                                o.date,
+                                o.totalValue,
+                                o.paymentMethod,
+                                o.idClient,
+                                i.quantity,
+                                i.unitPrice,
+                                i.subtotal,
+                    FROM ORDERS o JOIN ORDER_ITEMS i ON id = idOrder";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -40,12 +48,10 @@ namespace LitePDV.Repository
                                 var order = new Order
                                 (
                                     id: Convert.ToInt32(response["id"]),
-                                    name: response["name"].ToString(),
-                                    email: response["email"].ToString(),
-                                    phone: response["phone"].ToString(),
-                                    smartphone: response["smartphone"].ToString(),
-                                    cpf: response["cpf"].ToString(),
-                                    rg: response["rg"].ToString()
+                                    date: Convert.ToDateTime(response["date"]),
+                                    totalValue: Convert.ToDouble(response["totalValue"]),
+                                    paymentMethod: response["paymentMethod"].ToString(),
+                                    idClient: Convert.ToInt32(response["idClient"])
                                 );
 
                                 orders.Add(order);
@@ -60,9 +66,11 @@ namespace LitePDV.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao buscar todos os orderes: {ex}");
+                throw new Exception($"Erro ao buscar todos os pedidos: {ex}");
             }
         }
+
+        
 
         public Order GetById(int id)
         {
@@ -72,7 +80,7 @@ namespace LitePDV.Repository
 
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "SELECT * FROM CLIENT WHERE id = @id";
+                    const string query = "SELECT * FROM ORDERS WHERE id = @id";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -87,12 +95,10 @@ namespace LitePDV.Repository
                                 order = new Order
                                 (
                                     id: Convert.ToInt32(reader["id"]),
-                                    name: reader["name"].ToString(),
-                                    email: reader["email"].ToString(),
-                                    phone: reader["phone"].ToString(),
-                                    smartphone: reader["smartphone"].ToString(),
-                                    cpf: reader["phone"].ToString(),
-                                    rg: reader["phone"].ToString()
+                                    date: Convert.ToDateTime(reader["date"]),
+                                    totalValue: Convert.ToDouble(reader["totalValue"]),
+                                    paymentMethod: reader["paymentMethod"].ToString(),
+                                    idClient: Convert.ToInt32(reader["idClient"])
                                 );
                             }
                         }
@@ -105,7 +111,7 @@ namespace LitePDV.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao buscar o ordere por id: {ex.Message}", ex);
+                throw new Exception($"Erro ao buscar o pedido por id: {ex.Message}", ex);
             }
         }
 
@@ -115,45 +121,59 @@ namespace LitePDV.Repository
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "INSERT INTO CLIENT (name, email, phone, smartphone, cpf, rg) VALUES(@name, @email, @phone, @smartphone, @cpf, @rg)";
+                    connection.Open();
+
+                    const string query = "INSERT INTO ORDERS (date, totalValue, paymentMethod, idClient) OUTPUT INSERTED.id VALUES(@date, @totalValue, @paymentMethod, @idClient)";
 
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@name", order.name);
-                        command.Parameters.AddWithValue("@email", order.email);
-                        command.Parameters.AddWithValue("@phone", order.phone);
-                        command.Parameters.AddWithValue("@smartphone", order.smartphone);
-                        command.Parameters.AddWithValue("@cpf", order.cpf);
-                        command.Parameters.AddWithValue("@rg", order.rg);
+                        command.Parameters.AddWithValue("@date", DateTime.Now);
+                        command.Parameters.AddWithValue("@totalValue", order.totalValue);
+                        command.Parameters.AddWithValue("@paymentMethod", order.paymentMethod);
+                        command.Parameters.AddWithValue("@idClient", order.idClient);
 
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
+                        order.id = (int)command.ExecuteScalar();
+
                     }
+
+                    foreach (var item in order.items)
+                    {
+                        const string queryItem = "INSERT INTO ORDER_ITEMS (quantity, unitPrice, subtotal, idProduct, idOrder) " +
+                                                 "VALUES(@quantity, @unitPrice, @subtotal, @idProduct, @idOrder)";
+
+                        using (var command = new SqlCommand(queryItem, connection))
+                        {
+                            command.Parameters.AddWithValue("@quantity", item.quantity);
+                            command.Parameters.AddWithValue("@unitPrice", item.unitPrice);
+                            command.Parameters.AddWithValue("@subtotal", item.subtotal);
+                            command.Parameters.AddWithValue("@idProduct", item.idProduct);
+                            command.Parameters.AddWithValue("@idOrder", order.id);
+
+                            command.ExecuteNonQuery();
+                        }
+                    }
+
+                    connection.Close();
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao inserir o ordere: {ex}");
+                throw new Exception($"Erro ao inserir o pedido: {ex}");
             }
         }
 
-        public void Update(Order order) // verificar para casos de atualizações parciais
+        public void Update(Order order) // verificar para casos de atualizações parciais e campos
         {
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "UPDATE CLIENT SET name = @name, email = @email, phone = @phone, smartphone = @smartphone, cpf = @cpf, rg = @rg WHERE id = @id";
+                    const string query = "UPDATE ORDERS SET totalValue = @totalValue, paymentMethod = @paymentMethod WHERE id = @id";
 
                     using (var command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@name", order.name);
-                        command.Parameters.AddWithValue("@email", order.email);
-                        command.Parameters.AddWithValue("@phone", order.phone);
-                        command.Parameters.AddWithValue("@smartphone", order.smartphone);
-                        command.Parameters.AddWithValue("@cpf", order.cpf);
-                        command.Parameters.AddWithValue("@rg", order.rg);
+                        command.Parameters.AddWithValue("@totalValue", order.totalValue);
+                        command.Parameters.AddWithValue("@paymentMethod", order.paymentMethod);
                         command.Parameters.AddWithValue("@id", order.id);
 
                         connection.Open();
@@ -164,7 +184,7 @@ namespace LitePDV.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao atualizar o ordere: {ex}");
+                throw new Exception($"Erro ao atualizar o pedido: {ex}");
             }
         }
 
@@ -174,7 +194,7 @@ namespace LitePDV.Repository
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "DELETE FROM CLIENT WHERE id = @id";
+                    const string query = "DELETE FROM ORDERS WHERE id = @id";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -190,7 +210,7 @@ namespace LitePDV.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao deletar o ordere por id: {ex.Message}", ex);
+                throw new Exception($"Erro ao deletar o pedido por id: {ex.Message}", ex);
             }
         }
 

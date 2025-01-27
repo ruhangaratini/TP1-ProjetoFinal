@@ -48,7 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Checks\ClientCheck.cs" />
-    <Compile Include="Checks\Product.cs" />
+    <Compile Include="Checks\OrderCheck.cs" />
+    <Compile Include="Checks\ProductCheck.cs" />
     <Compile Include="LitePDV.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,10 +58,12 @@
     </Compile>
     <Compile Include="Model\Client.cs" />
     <Compile Include="Model\Order.cs" />
+    <Compile Include="Model\OrderItem.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ClientRepository.cs" />
+    <Compile Include="Repository\OrderItemRepository.cs" />
     <Compile Include="Repository\OrderRepository.cs" />
     <Compile Include="Repository\ProductRepository.cs" />
     <Compile Include="Resource1.Designer.cs">
@@ -69,6 +72,7 @@
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
     <Compile Include="Service\ClientService.cs" />
+    <Compile Include="Service\OrderService.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="View\CustomerView.cs">
       <SubType>UserControl</SubType>

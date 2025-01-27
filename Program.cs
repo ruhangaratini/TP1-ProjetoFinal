@@ -17,27 +17,35 @@ namespace LitePDV
         //[STAThread]
         static void Main()
         {
-            var clientService = new ClientService();
+            var orderService = new OrderService();
 
-            // teste delete
-            try
-            {
-                bool client = clientService.DeleteById(3);
+            var newOrder = new Order
+            (
+                paymentMethod: "Credit Card",
+                idClient: 1
+            );
 
-                if (client)
-                {
-                    Console.WriteLine("Cliente deletado com sucesso");
-                }
-                else
-                {
-                    Console.WriteLine("Não existe cliente com o ID informado. Verifique e tente novamente.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erro ao deletar o cliente: {ex.Message}");
-            }
+            newOrder.items.Add(new OrderItem
+            (
+                id: 0,
+                quantity: 2,
+                unitPrice: 500,
+                subtotal: 1000,
+                idProduct: 1,
+                idOrder: 0
+            ));
 
+            newOrder.items.Add(new OrderItem
+            (
+                id: 0,
+                quantity: 2,
+                unitPrice: 600,
+                subtotal: 1200,
+                idProduct: 2,
+                idOrder: 0
+            ));
+
+            orderService.Insert(newOrder);
 
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
