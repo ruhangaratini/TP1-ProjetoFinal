@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LitePDV.Repository
 {
-    internal class ClientRepository
+    internal class ClientRepository : IRepository<Client>
     {
         private readonly string _connectionString;
 

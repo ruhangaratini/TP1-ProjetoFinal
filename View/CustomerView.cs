@@ -103,5 +103,10 @@ namespace LitePDV.View
                 }
             }
         }
+
+        private void flowLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

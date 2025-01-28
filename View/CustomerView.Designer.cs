@@ -183,6 +183,7 @@ namespace LitePDV.View
             this.flowLayoutPanel4.Padding = new System.Windows.Forms.Padding(27, 0, 27, 0);
             this.flowLayoutPanel4.Size = new System.Drawing.Size(1307, 65);
             this.flowLayoutPanel4.TabIndex = 3;
+            this.flowLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel4_Paint);
             // 
             // label3
             // 
@@ -217,7 +218,7 @@ namespace LitePDV.View
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1248, 272);
+            this.dataGridView1.Size = new System.Drawing.Size(1248, 550);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -229,7 +230,7 @@ namespace LitePDV.View
             this.Controls.Add(this.Header);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CustomerView";
-            this.Size = new System.Drawing.Size(1315, 638);
+            this.Size = new System.Drawing.Size(1315, 800);
             this.Load += new System.EventHandler(this.CustomerView_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);

@@ -65,26 +65,30 @@ namespace LitePDV.View
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            if(NameInput.Text != null && EmailInput.Text != null)
+            Client client = new Client();
+            client.name = NameInput.Text;
+            client.email = EmailInput.Text;
+            client.phone = TelephoneInput.Text;
+            client.smartphone = PhoneInput.Text;
+            client.cpf = CpfInput.Text;
+            client.rg = RgInput.Text;
+
+            Response<Client> response = _service.Insert(client);
+
+            if(!response.success)
             {
-                Client client = new Client();
-                client.name = NameInput.Text;
-                client.email = EmailInput.Text;
-                client.phone = TelephoneInput.Text;
-                client.smartphone = PhoneInput.Text;
-                client.cpf = CpfInput.Text;
-                client.rg = RgInput.Text;
-
-                _service.Insert(client);
-                MessageBox.Show($"{client.name} inserido(a) com sucesso!");
-
-                NameInput.ResetText();
-                EmailInput.ResetText();
-                TelephoneInput.ResetText();
-                PhoneInput.ResetText();
-                CpfInput.ResetText();
-                RgInput.ResetText();
+                MessageBox.Show(response.message);
+                return;
             }
+
+            MessageBox.Show($"{client.name} inserido(a) com sucesso!");
+            NameInput.ResetText();
+            EmailInput.ResetText();
+            TelephoneInput.ResetText();
+            PhoneInput.ResetText();
+            CpfInput.ResetText();
+            RgInput.ResetText();
+            
         }
     }
 }
