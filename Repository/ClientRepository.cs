@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LitePDV.Repository
 {
-    internal class ClientRepository : IRepository<Client>
+    internal class ClientRepository // : IRepository<Client>
     {
         private static readonly SqlServerConfig _db = new SqlServerConfig();
 

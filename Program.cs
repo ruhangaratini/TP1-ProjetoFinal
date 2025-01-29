@@ -27,7 +27,7 @@ namespace LitePDV
             var clientUpdated = new Client
             (
                 id: 2,
-                name: "Johnny Doe",
+                name: "New test",
                 email: "johnny@email.com",
                 phone: "3333-6060",
                 smartphone: "9999-9999",
