@@ -19,7 +19,8 @@ namespace LitePDV.View
         private readonly ClientService _clientService = new ClientService();
         private readonly ProductService _productService = new ProductService();
         private DataTable _dataTable = new DataTable();
-        private int _orderId;
+        private String selectedClient;
+        private int? _orderId;
 
         public RegisterSaleModal()
         {
@@ -47,10 +48,9 @@ namespace LitePDV.View
             var clients = _clientService.GetAll();
             var products = _productService.GetAll();
 
-            foreach (var client in clients)
-            {
-                CustomerBox.Items.Add(new ComboBoxItem<Client>(client.name, client));
-            }
+            CustomerBox.DataSource = clients;
+            CustomerBox.DisplayMember = "Name";
+            CustomerBox.ValueMember = "ID";
 
             foreach (var product in products)
             {
@@ -80,6 +80,10 @@ namespace LitePDV.View
                 MessageBox.Show($"Quantidade em estoque insuficiente (saldo final: {product.stockQuantity - quantity})");
                 return;
             }
+            else
+            {
+                product.stockQuantity -= quantity;
+            }
 
             _dataTable.Rows.Add(product.id, product.name, product.price, quantity, product.price * quantity);
         }
@@ -95,7 +99,7 @@ namespace LitePDV.View
             dataGridView1.DataSource = _dataTable;
 
             DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
-            btn.HeaderText = "Excluir Cliente";
+            btn.HeaderText = "Excluir Venda";
             btn.Name = "excluirButton";
             btn.Text = "Excluir";
             btn.UseColumnTextForButtonValue = true;
@@ -127,18 +131,62 @@ namespace LitePDV.View
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            Response<Order> response;
             List<OrderItem> items = new List<OrderItem>();
+            Order order = new Order();
+            var products = _productService.GetAll();
 
-            foreach (DataGridViewRow row in dataGridView1.Rows)
+            foreach (DataRow row in _dataTable.Rows)
             {
-                //items.Add(new OrderItem(
-                //    quantity: row.Cells["Quantidade"].Value,
-                //    unitPrice: row.Cells["Valor Unitário"].Value,
-                //    subtotal: row.Cells["Valor Total"].Value,
-                //    idProduct: row.Cells["ID"].Value,
-                //    idOrder: 1
-                //));
+                items.Add(new OrderItem(
+                    quantity: Convert.ToInt32(row["Quantidade"]),
+                    unitPrice: Convert.ToDouble(row["Valor Unitário"]),
+                    subtotal: Convert.ToDouble(row["Valor Total"]),
+                    idProduct: Convert.ToInt32(row["ID"]),
+                    idOrder: 0
+                ));
             }
+            
+            order.client = _clientService.GetById(Convert.ToInt16(CustomerBox.SelectedValue));
+            order.date = DateTime.Now;
+            order.totalValue = 0;
+            order.paymentMethod = "Aleatório";
+            order.items = items;
+
+            if (_orderId == null)
+            {
+                response = _orderService.Insert(order);
+            }
+            else
+            {
+                order.id = (int)_orderId;
+                response = _orderService.Update(order);
+            }
+
+            if (!response.success)
+            {
+                MessageBox.Show(response.message);
+                return;
+            }
+
+            String palavra = _orderId == null ? "inserida" : "atualizada";
+            MessageBox.Show($"Venda {palavra} com sucesso!");
+
+            foreach (Product product in products)
+            {
+                foreach(OrderItem item in items){
+                    if(product.id == item.idProduct)
+                    {
+                        product.stockQuantity = product.stockQuantity - item.quantity;
+                        _productService.Update(product);
+                    }
+                }
+            }
+        }
+
+        private void CustomerBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedClient = (sender as System.Windows.Forms.ComboBox).Text;
         }
     }
 }

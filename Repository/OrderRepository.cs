@@ -60,7 +60,7 @@ namespace LitePDV.Repository
                                         date: Convert.ToDateTime(response["date"]),
                                         totalValue: Convert.ToDouble(response["totalValue"]),
                                         paymentMethod: response["paymentMethod"].ToString(),
-                                        client: null
+                                        client : null
                                     );
 
                                     orderDict.Add(orderId, order);
@@ -179,6 +179,7 @@ namespace LitePDV.Repository
                         command.Parameters.AddWithValue("@date", DateTime.Now);
                         command.Parameters.AddWithValue("@totalValue", order.totalValue);
                         command.Parameters.AddWithValue("@paymentMethod", order.paymentMethod);
+                        command.Parameters.AddWithValue("@idClient", order.client.id);
 
                         order.id = (int)command.ExecuteScalar();
 

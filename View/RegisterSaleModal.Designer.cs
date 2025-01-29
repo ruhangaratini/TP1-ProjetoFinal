@@ -48,10 +48,10 @@
             this.CancelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.flowLayoutPanel7 = new System.Windows.Forms.FlowLayoutPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
@@ -60,9 +60,9 @@
             this.flowLayoutPanel6.SuspendLayout();
             this.flowLayoutPanel11.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.flowLayoutPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -72,7 +72,7 @@
             this.flowLayoutPanel1.Controls.Add(this.CloseForm);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1333, 65);
             this.flowLayoutPanel1.TabIndex = 3;
@@ -92,7 +92,7 @@
             // panel1
             // 
             this.panel1.Location = new System.Drawing.Point(281, 4);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(961, 62);
             this.panel1.TabIndex = 1;
@@ -115,7 +115,7 @@
             this.flowLayoutPanel2.Controls.Add(this.flowLayoutPanel4);
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 84);
-            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(1333, 102);
             this.flowLayoutPanel2.TabIndex = 4;
@@ -126,7 +126,7 @@
             this.flowLayoutPanel4.Controls.Add(this.CustomerBox);
             this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel4.Location = new System.Drawing.Point(4, 4);
-            this.flowLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel4.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
             this.flowLayoutPanel4.Padding = new System.Windows.Forms.Padding(40, 0, 40, 0);
             this.flowLayoutPanel4.Size = new System.Drawing.Size(1333, 85);
@@ -150,10 +150,11 @@
             this.CustomerBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CustomerBox.FormattingEnabled = true;
             this.CustomerBox.Location = new System.Drawing.Point(44, 32);
-            this.CustomerBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CustomerBox.Margin = new System.Windows.Forms.Padding(4);
             this.CustomerBox.Name = "CustomerBox";
             this.CustomerBox.Size = new System.Drawing.Size(1245, 36);
             this.CustomerBox.TabIndex = 5;
+            this.CustomerBox.SelectedIndexChanged += new System.EventHandler(this.CustomerBox_SelectedIndexChanged);
             // 
             // flowLayoutPanel3
             // 
@@ -162,7 +163,7 @@
             this.flowLayoutPanel3.Controls.Add(this.AddProduct);
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(4, 193);
-            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(1333, 107);
             this.flowLayoutPanel3.TabIndex = 6;
@@ -173,7 +174,7 @@
             this.flowLayoutPanel5.Controls.Add(this.ProductBox);
             this.flowLayoutPanel5.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel5.Location = new System.Drawing.Point(4, 4);
-            this.flowLayoutPanel5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel5.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel5.Name = "flowLayoutPanel5";
             this.flowLayoutPanel5.Padding = new System.Windows.Forms.Padding(40, 0, 40, 0);
             this.flowLayoutPanel5.Size = new System.Drawing.Size(737, 84);
@@ -197,10 +198,9 @@
             this.ProductBox.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ProductBox.FormattingEnabled = true;
             this.ProductBox.Location = new System.Drawing.Point(44, 32);
-            this.ProductBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ProductBox.Margin = new System.Windows.Forms.Padding(4);
             this.ProductBox.Name = "ProductBox";
             this.ProductBox.Size = new System.Drawing.Size(675, 36);
-            this.ProductBox.TabIndex = 5;
             // 
             // flowLayoutPanel6
             // 
@@ -208,7 +208,7 @@
             this.flowLayoutPanel6.Controls.Add(this.QuantityInput);
             this.flowLayoutPanel6.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel6.Location = new System.Drawing.Point(749, 4);
-            this.flowLayoutPanel6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel6.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel6.Name = "flowLayoutPanel6";
             this.flowLayoutPanel6.Padding = new System.Windows.Forms.Padding(40, 0, 40, 0);
             this.flowLayoutPanel6.Size = new System.Drawing.Size(345, 84);
@@ -230,7 +230,7 @@
             // 
             this.QuantityInput.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.QuantityInput.Location = new System.Drawing.Point(44, 32);
-            this.QuantityInput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.QuantityInput.Margin = new System.Windows.Forms.Padding(4);
             this.QuantityInput.Name = "QuantityInput";
             this.QuantityInput.Size = new System.Drawing.Size(265, 34);
             this.QuantityInput.TabIndex = 7;
@@ -263,7 +263,7 @@
             this.flowLayoutPanel11.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel11.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.flowLayoutPanel11.Location = new System.Drawing.Point(0, 656);
-            this.flowLayoutPanel11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flowLayoutPanel11.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel11.Name = "flowLayoutPanel11";
             this.flowLayoutPanel11.Padding = new System.Windows.Forms.Padding(13, 0, 40, 0);
             this.flowLayoutPanel11.Size = new System.Drawing.Size(1333, 82);
@@ -308,42 +308,10 @@
             this.panel2.Controls.Add(this.flowLayoutPanel7);
             this.panel2.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.panel2.Location = new System.Drawing.Point(20, 308);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1289, 327);
             this.panel2.TabIndex = 10;
-            // 
-            // flowLayoutPanel7
-            // 
-            this.flowLayoutPanel7.Controls.Add(this.pictureBox1);
-            this.flowLayoutPanel7.Controls.Add(this.textBox1);
-            this.flowLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flowLayoutPanel7.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanel7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.flowLayoutPanel7.Name = "flowLayoutPanel7";
-            this.flowLayoutPanel7.Padding = new System.Windows.Forms.Padding(20, 12, 20, 0);
-            this.flowLayoutPanel7.Size = new System.Drawing.Size(1287, 65);
-            this.flowLayoutPanel7.TabIndex = 0;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::LitePDV.Properties.Resources.product;
-            this.pictureBox1.Location = new System.Drawing.Point(24, 16);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(47, 37);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(88, 16);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(13, 4, 4, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(1156, 34);
-            this.textBox1.TabIndex = 8;
             // 
             // dataGridView1
             // 
@@ -361,6 +329,38 @@
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
+            // flowLayoutPanel7
+            // 
+            this.flowLayoutPanel7.Controls.Add(this.pictureBox1);
+            this.flowLayoutPanel7.Controls.Add(this.textBox1);
+            this.flowLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.flowLayoutPanel7.Location = new System.Drawing.Point(0, 0);
+            this.flowLayoutPanel7.Margin = new System.Windows.Forms.Padding(4);
+            this.flowLayoutPanel7.Name = "flowLayoutPanel7";
+            this.flowLayoutPanel7.Padding = new System.Windows.Forms.Padding(20, 12, 20, 0);
+            this.flowLayoutPanel7.Size = new System.Drawing.Size(1287, 65);
+            this.flowLayoutPanel7.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::LitePDV.Properties.Resources.product;
+            this.pictureBox1.Location = new System.Drawing.Point(24, 16);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(47, 37);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(88, 16);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(13, 4, 4, 4);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(1156, 34);
+            this.textBox1.TabIndex = 8;
+            // 
             // RegisterSaleModal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -372,7 +372,7 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.flowLayoutPanel3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "RegisterSaleModal";
             this.Text = "RegisterSaleModal";
             this.Load += new System.EventHandler(this.RegisterSaleModal_Load);
@@ -388,10 +388,10 @@
             this.flowLayoutPanel6.PerformLayout();
             this.flowLayoutPanel11.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.flowLayoutPanel7.ResumeLayout(false);
             this.flowLayoutPanel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }

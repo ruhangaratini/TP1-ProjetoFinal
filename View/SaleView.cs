@@ -41,11 +41,13 @@ namespace LitePDV.View
             _dataTable.Columns.Add("Valor total");
             _dataTable.Columns.Add("Método de pagamento");
             _dataTable.Columns.Add("Data");
-            dataGridView1.DataSource = _dataTable;
 
             foreach (Order order in orders) {
-                _dataTable.Rows.Add(order.id, order.client.name, order.totalValue, order.paymentMethod, order.date);
+                string clientName = order.client != null ? order.client.name : "Sem Cliente";
+                _dataTable.Rows.Add(order.id, clientName, order.totalValue, order.paymentMethod, order.date);
             }
+
+            dataGridView1.DataSource = _dataTable;
 
             DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
             btn.HeaderText = "Editar Venda";
@@ -55,7 +57,7 @@ namespace LitePDV.View
             dataGridView1.Columns.Add(btn);
 
             DataGridViewButtonColumn btn2 = new DataGridViewButtonColumn();
-            btn2.HeaderText = "Excluir Cliente";
+            btn2.HeaderText = "Excluir Venda";
             btn2.Name = "excluirButton";
             btn2.Text = "Excluir";
             btn2.UseColumnTextForButtonValue = true;
@@ -89,7 +91,7 @@ namespace LitePDV.View
                 {
                     int id = Convert.ToInt32(cellValue);
                     _service.DeleteById(id);
-                    MessageBox.Show("Cliente excluído com sucesso!");
+                    MessageBox.Show("Produto excluído com sucesso!");
                 }
             }
         }
