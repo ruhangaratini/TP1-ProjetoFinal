@@ -39,7 +39,6 @@ namespace LitePDV.Repository
                             {
                                 var orderItem = new OrderItem
                                 (
-                                    id: Convert.ToInt32(response["id"]),
                                     quantity: Convert.ToInt32(response["quantity"]),
                                     unitPrice: Convert.ToDouble(response["unitPrice"]),
                                     subtotal: Convert.ToDouble(response["subtotal"]),
@@ -85,7 +84,6 @@ namespace LitePDV.Repository
                             {
                                 orderItem = new OrderItem
                                 (
-                                    id: Convert.ToInt32(reader["id"]),
                                     quantity: Convert.ToInt32(reader["quantity"]),
                                     unitPrice: Convert.ToDouble(reader["unitPrice"]),
                                     subtotal: Convert.ToDouble(reader["subtotal"]),

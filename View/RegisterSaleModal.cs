@@ -127,9 +127,17 @@ namespace LitePDV.View
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            List<OrderItem> items = new List<OrderItem>();
+
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                new OrderItem();
+                //items.Add(new OrderItem(
+                //    quantity: row.Cells["Quantidade"].Value,
+                //    unitPrice: row.Cells["Valor Unitário"].Value,
+                //    subtotal: row.Cells["Valor Total"].Value,
+                //    idProduct: row.Cells["ID"].Value,
+                //    idOrder: 1
+                //));
             }
         }
     }
