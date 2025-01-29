@@ -23,19 +23,24 @@ namespace LitePDV.Repository
             try
             {
                 var orders = new List<Order>();
+                var orderDict = new Dictionary<int, Order>();
 
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = @"SELECT
-                                o.id,
-                                o.date,
-                                o.totalValue,
-                                o.paymentMethod,
-                                o.idClient,
-                                i.quantity,
-                                i.unitPrice,
-                                i.subtotal,
-                    FROM ORDERS o JOIN ORDER_ITEMS i ON id = idOrder";
+                    const string query = @"
+                                        SELECT
+                                            o.id,
+                                            o.date,
+                                            o.totalValue,
+                                            o.paymentMethod,
+                                            o.idClient,
+                                            i.quantity,
+                                            i.unitPrice,
+                                            i.subtotal,
+                                            i.idProduct
+                                        FROM ORDERS o
+                                        JOIN ORDER_ITEMS i ON o.id = i.idOrder
+                                        JOIN CLIENT c ON o.idClient = c.id";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -45,16 +50,33 @@ namespace LitePDV.Repository
                         {
                             while (response.Read())
                             {
-                                var order = new Order
+                                var orderId = Convert.ToInt32(response["id"]);
+
+                                if (!orderDict.ContainsKey(orderId))
+                                {
+                                    var order = new Order
+                                    (
+                                        id: orderId,
+                                        date: Convert.ToDateTime(response["date"]),
+                                        totalValue: Convert.ToDouble(response["totalValue"]),
+                                        paymentMethod: response["paymentMethod"].ToString(),
+                                        client: null
+                                    );
+
+                                    orderDict.Add(orderId, order);
+                                    orders.Add(order);
+                                }
+
+                                var orderItem = new OrderItem
                                 (
-                                    id: Convert.ToInt32(response["id"]),
-                                    date: Convert.ToDateTime(response["date"]),
-                                    totalValue: Convert.ToDouble(response["totalValue"]),
-                                    paymentMethod: response["paymentMethod"].ToString(),
-                                    idClient: Convert.ToInt32(response["idClient"])
+                                    quantity: Convert.ToInt32(response["quantity"]),
+                                    unitPrice: Convert.ToDouble(response["unitPrice"]),
+                                    subtotal: Convert.ToDouble(response["subtotal"]),
+                                    idProduct: Convert.ToInt32(response["idProduct"]),
+                                    idOrder: orderId
                                 );
 
-                                orders.Add(order);
+                                orderDict[orderId].items.Add(orderItem);
                             }
                         }
 
@@ -66,21 +88,26 @@ namespace LitePDV.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao buscar todos os pedidos: {ex}");
+                throw new Exception($"Erro ao buscar todos os pedidos: {ex.Message}", ex);
             }
         }
-
-
 
         public Order GetById(int id)
         {
             try
             {
                 Order order = null;
+                var orderDict = new Dictionary<int, Order>();
 
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "SELECT * FROM ORDERS WHERE id = @id";
+                    const string query = @"
+                SELECT
+                    *
+                FROM ORDERS o
+                LEFT JOIN ORDER_ITEMS i ON o.id = i.idOrder
+                INNER JOIN CLIENT c ON c.id = o.idClient
+                WHERE o.id = @id";
 
                     using (var command = new SqlCommand(query, connection))
                     {
@@ -98,8 +125,30 @@ namespace LitePDV.Repository
                                     date: Convert.ToDateTime(reader["date"]),
                                     totalValue: Convert.ToDouble(reader["totalValue"]),
                                     paymentMethod: reader["paymentMethod"].ToString(),
-                                    idClient: Convert.ToInt32(reader["idClient"])
+                                    client: new Client(
+                                        id: Convert.ToInt32(reader["idClient"]),
+                                        name: reader["name"].ToString(),
+                                        email: reader["email"].ToString(),
+                                        phone: reader["phone"].ToString(),
+                                        smartphone: reader["smartphone"].ToString(),
+                                        cpf: reader["cpf"].ToString(),
+                                        rg: reader["rg"].ToString()
+                                    )
                                 );
+
+                                do
+                                {
+                                    var orderItem = new OrderItem
+                                    (
+                                        quantity: Convert.ToInt32(reader["quantity"]),
+                                        unitPrice: Convert.ToDouble(reader["unitPrice"]),
+                                        subtotal: Convert.ToDouble(reader["subtotal"]),
+                                        idProduct: Convert.ToInt32(reader["idProduct"]),
+                                        idOrder: Convert.ToInt32(reader["id"])
+                                    );
+
+                                    order.items.Add(orderItem);
+                                } while (reader.Read());
                             }
                         }
 
@@ -130,7 +179,6 @@ namespace LitePDV.Repository
                         command.Parameters.AddWithValue("@date", DateTime.Now);
                         command.Parameters.AddWithValue("@totalValue", order.totalValue);
                         command.Parameters.AddWithValue("@paymentMethod", order.paymentMethod);
-                        command.Parameters.AddWithValue("@idClient", order.idClient);
 
                         order.id = (int)command.ExecuteScalar();
 
@@ -162,7 +210,7 @@ namespace LitePDV.Repository
             }
         }
 
-        public void Update(Order order) // verificar para casos de atualizações parciais e campos
+        public void Update(Order order)
         {
             try
             {
@@ -194,17 +242,28 @@ namespace LitePDV.Repository
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
+                    connection.Open();
+
+                    const string queryOrderItem = "DELETE FROM ORDER_ITEMS WHERE idOrder = @id";
+
+                    using (var command = new SqlCommand(queryOrderItem, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", id);
+
+                        command.ExecuteNonQuery();
+                    }
+
                     const string query = "DELETE FROM ORDERS WHERE id = @id";
 
                     using (var command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@id", id);
 
-                        connection.Open();
                         command.ExecuteNonQuery();
-                        connection.Close();
                     }
+                    connection.Close();
                 }
+
 
                 return true;
             }

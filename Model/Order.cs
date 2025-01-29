@@ -12,18 +12,21 @@ namespace LitePDV.Model
         public DateTime date { get; set; }
         public double totalValue { get; set; }
         public string paymentMethod { get; set; }
-        public int idClient { get; set; }
+        public Client client { get; set; }
         public List<OrderItem> items { get; set; } = new List<OrderItem>();
 
-        public Order() { }
+        public Order()
+        {
+            items = new List<OrderItem>();
+        }
 
-        public Order(int id, DateTime date, double totalValue, string paymentMethod, int idClient)
+        public Order(int id, DateTime date, double totalValue, string paymentMethod, Client client)
         {
             this.id = id;
             this.date = date;
             this.totalValue = totalValue;
             this.paymentMethod = paymentMethod;
-            this.idClient = idClient;
+            this.client = client;
         }
 
         public Order(int id, double totalValue, string paymentMethod)
@@ -31,12 +34,6 @@ namespace LitePDV.Model
             this.id = id;
             this.totalValue = totalValue;
             this.paymentMethod = paymentMethod;
-        }
-
-        public Order(string paymentMethod, int idClient)
-        {
-            this.paymentMethod = paymentMethod;
-            this.idClient = idClient;
         }
 
     }

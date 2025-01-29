@@ -50,6 +50,7 @@
     <Compile Include="Checks\ClientCheck.cs" />
     <Compile Include="Checks\OrderCheck.cs" />
     <Compile Include="Checks\ProductCheck.cs" />
+    <Compile Include="Config\SqlServerConfig.cs" />
     <Compile Include="LitePDV.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +63,7 @@
       <DependentUpon>LitePDVDataSet1.xsd</DependentUpon>
     </Compile>
     <Compile Include="Model\Client.cs" />
+    <Compile Include="Model\Response.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderItem.cs" />
     <Compile Include="Model\Product.cs" />
@@ -77,6 +79,7 @@
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
     <Compile Include="Service\ClientService.cs" />
+    <Compile Include="Service\InitDatabaseService.cs" />
     <Compile Include="Service\OrderService.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="View\CustomerView.cs">

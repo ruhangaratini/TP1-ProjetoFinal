@@ -17,39 +17,37 @@ namespace LitePDV
         //[STAThread]
         static void Main()
         {
-            //var orderService = new OrderService();
+            //teste insert
+            var productService = new ProductService();
+            var clientService = new ClientService();
+            var orderService = new OrderService();
+            var initDatabaseService = new InitDatabaseService();
 
-            //var newOrder = new Order
-            //(
-            //    paymentMethod: "Credit Card",
-            //    idClient: 1
-            //);
+            //initDatabaseService.InitializeDatabase();
+            var clientUpdated = new Client
+            (
+                id: 2,
+                name: "Johnny Doe",
+                email: "johnny@email.com",
+                phone: "3333-6060",
+                smartphone: "9999-9999",
+                cpf: "33333300090",
+                rg: "909990008"
+            );
 
-            //newOrder.items.Add(new OrderItem
-            //(
-            //    id: 0,
-            //    quantity: 2,
-            //    unitPrice: 500,
-            //    subtotal: 1000,
-            //    idProduct: 1,
-            //    idOrder: 0
-            //));
+            try
+            {
+                clientService.Update(clientUpdated);
+                Console.WriteLine("Cliente atualizado com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao atualizar o cliente: {ex.Message}");
+            }
 
-            //newOrder.items.Add(new OrderItem
-            //(
-            //    id: 0,
-            //    quantity: 2,
-            //    unitPrice: 600,
-            //    subtotal: 1200,
-            //    idProduct: 2,
-            //    idOrder: 0
-            //));
-
-            //orderService.Insert(newOrder);
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LitePDV());
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new LitePDV());
         }
 
     }

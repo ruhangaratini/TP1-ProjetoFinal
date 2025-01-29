@@ -21,7 +21,7 @@ namespace LitePDV.Service
         {
             var clients = _repository.GetAll();
 
-            return clients.ToList(); // verificar
+            return clients.ToList();
         }
 
         public Client GetById(int id)

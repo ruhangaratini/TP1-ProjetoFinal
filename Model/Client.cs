@@ -38,5 +38,17 @@ namespace LitePDV.Model
             this.cpf = cpf;
             this.rg = rg;
         }
+
+        public static Client FromDictionary(Dictionary<string, dynamic> dic)
+        {
+            return new Client(
+                name: dic["name"],
+                email: dic["email"],
+                phone: dic["phone"],
+                smartphone: dic["smartphone"],
+                cpf: dic["cpf"],
+                rg: dic["rg"]
+            );
+        }
     }
 }

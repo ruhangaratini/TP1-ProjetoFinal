@@ -11,44 +11,17 @@ namespace LitePDV.Checks
     {
         //private readonly OrderRepository _repository;
         // test insert
-        //var newOrder = new Order
-        //(
-        //    totalValue: 2000,
-        //    paymentMethod: "Credit Card",
-        //    idClient: 1
-        //);
-
-        //newOrder.items.Add(new OrderItem
-        //(
-        //    id: 0,
-        //    quantity: 2,
-        //    unitPrice: 500,
-        //    subtotal: 1000,
-        //    idProduct: 1,
-        //    idOrder: 0    
-        //));
-
-        //newOrder.items.Add(new OrderItem
-        //(
-        //    id: 0,
-        //    quantity: 1,
-        //    unitPrice: 1000,
-        //    subtotal: 1000,
-        //    idProduct: 2,
-        //    idOrder: 0
-        //));
-
-        //orderService.Insert(newOrder);
-
         //try
         //{
-        //    orderService.Insert(newOrder);
-        //    Console.WriteLine("Pedido inserido com sucesso!");
+        //    var order = orderService.GetById(2);
+        //    Console.WriteLine($"ID: {order.id}, Data: {order.date}, totalValue: {order.totalValue}, Método de pagamento: {order.paymentMethod}, Cliente: {order.client.name}");
         //}
         //catch (Exception ex)
         //{
-        //    Console.WriteLine($"Erro ao inserir o pedido: {ex.Message}");
+        //    Console.WriteLine($"Erro ao buscar o pedido por id: {ex.Message}");
         //}
+
+        //orderService.Insert(newOrder);
 
         // test get by id
         //try
@@ -88,6 +61,12 @@ namespace LitePDV.Checks
         //    foreach (var order in orders)
         //    {
         //        Console.WriteLine($"ID: {order.id}, Data: {order.date}, Valor total: {order.totalValue}, Método de pagamento: {order.paymentMethod}");
+
+        //        Console.WriteLine("Itens do pedido:");
+        //        foreach (var item in order.items)
+        //        {
+        //            Console.WriteLine($"- Produto ID: {item.idProduct}, Quantidade: {item.quantity}, Preço unitário: {item.unitPrice}, Subtotal: {item.subtotal}");
+        //        }
         //    }
         //}
         //catch (Exception ex)
@@ -99,15 +78,15 @@ namespace LitePDV.Checks
         // delete
         //try
         //{
-        //    bool order = orderService.DeleteById(3);
+        //    bool order = orderService.DeleteById(6);
 
         //    if (order)
         //    {
-        //        Console.WriteLine("Cliente deletado com sucesso");
+        //        Console.WriteLine("Pedido deletado com sucesso");
         //    }
         //    else
         //    {
-        //        Console.WriteLine("Não existe ordere com o ID informado. Verifique e tente novamente.");
+        //        Console.WriteLine("Não existe pedido com o ID informado. Verifique e tente novamente.");
         //    }
         //}
         //catch (Exception ex)

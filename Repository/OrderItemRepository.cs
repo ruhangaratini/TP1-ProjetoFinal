@@ -137,7 +137,7 @@ namespace LitePDV.Repository
             }
         }
 
-        public void Update(OrderItem orderItem) // verificar para casos de atualizações parciais e campos
+        public void Update(OrderItem orderItem) 
         {
             try
             {

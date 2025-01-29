@@ -1,4 +1,5 @@
 ﻿using LitePDV.Checks;
+using LitePDV.Config;
 using LitePDV.Model;
 using System;
 using System.Collections.Generic;
@@ -12,186 +13,135 @@ namespace LitePDV.Repository
 {
     internal class ClientRepository
     {
-        private readonly string _connectionString;
+        private static readonly SqlServerConfig _db = new SqlServerConfig();
 
-        public ClientRepository()
+        static void CreateTable()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            _db.Execute(@"
+                CREATE TABLE CLIENT (
+                    id INT PRIMARY KEY IDENTITY,
+                    name VARCHAR(100) NOT NULL,
+                    email VARCHAR(100),
+                    phone VARCHAR(20),
+                    smartphone VARCHAR(20),
+                    cpf VARCHAR(11),
+                    rg VARCHAR(20)
+                );
+            ");
         }
 
         public List<Client> GetAll()
         {
-            try
+            var clients = new List<Client>();
+            Response<List<Dictionary<string, dynamic>>> response = _db.ExecuteQuery("SELECT * FROM CLIENT");
+
+            if (!response.success || response.data == null)
             {
-                var clients = new List<Client>();
-
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    const string query = "SELECT * FROM CLIENT";
-
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        connection.Open();
-
-                        using (var response = command.ExecuteReader())
-                        {
-                            while (response.Read())
-                            {
-                                var client = new Client
-                                (
-                                    id: Convert.ToInt32(response["id"]),
-                                    name: response["name"].ToString(),
-                                    email: response["email"].ToString(),
-                                    phone: response["phone"].ToString(),
-                                    smartphone: response["smartphone"].ToString(),
-                                    cpf: response["cpf"].ToString(),
-                                    rg: response["rg"].ToString()
-                                );
-
-                                clients.Add(client);
-                            }
-                        }
-
-                        connection.Close();
-                    }
-                }
-
-                return clients;
+                return null;
             }
-            catch (Exception ex)
+
+            foreach (var row in response.data)
             {
-                throw new Exception($"Erro ao buscar todos os clientes: {ex}");
+                var client = new Client
+                (
+                    id: Convert.ToInt32(row["id"]),
+                    name: row["name"]?.ToString(),
+                    email: row["email"]?.ToString(),
+                    phone: row["phone"]?.ToString(),
+                    smartphone: row["smartphone"]?.ToString(),
+                    cpf: row["cpf"]?.ToString(),
+                    rg: row["rg"]?.ToString()
+                );
+
+                clients.Add(client);
             }
+
+            return clients;
         }
+
 
         public Client GetById(int id)
         {
-            try
+            Client client = null;
+
+            var parameter = new Dictionary<string, dynamic>
             {
-                Client client = null;
+                { "@id", id }
+            };
 
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    const string query = "SELECT * FROM CLIENT WHERE id = @id";
+            Response<List<Dictionary<string, dynamic>>> response = _db.ExecuteQuery("SELECT * FROM CLIENT WHERE id = @id", parameter);
 
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@id", id);
-
-                        connection.Open();
-
-                        using (var reader = command.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                client = new Client
-                                (
-                                    id: Convert.ToInt32(reader["id"]),
-                                    name: reader["name"].ToString(),
-                                    email: reader["email"].ToString(),
-                                    phone: reader["phone"].ToString(),
-                                    smartphone: reader["smartphone"].ToString(),
-                                    cpf: reader["phone"].ToString(),
-                                    rg: reader["phone"].ToString()
-                                );
-                            }
-                        }
-
-                        connection.Close();
-                    }
-                }
-
-                return client;
-            }
-            catch (Exception ex)
+            if (!response.success || response.data == null || response.data.Count == 0)
             {
-                throw new Exception($"Erro ao buscar o cliente por id: {ex.Message}", ex);
+                return null;
             }
+
+            var row = response.data.First();
+
+            client = new Client
+            (
+                id: Convert.ToInt32(row["id"]),
+                name: row["name"]?.ToString(),
+                email: row["email"]?.ToString(),
+                phone: row["phone"]?.ToString(),
+                smartphone: row["smartphone"]?.ToString(),
+                cpf: row["cpf"]?.ToString(),
+                rg: row["rg"]?.ToString()
+            );
+
+            return client;
         }
 
-        public void Insert(Client client)
+        public Response<int> Insert(Client client)
         {
-            try
+            var parameters = new Dictionary<string, dynamic>
             {
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    const string query = "INSERT INTO CLIENT (name, email, phone, smartphone, cpf, rg) VALUES(@name, @email, @phone, @smartphone, @cpf, @rg)";
+                { "@name", client.name },
+                { "@email", client.email },
+                { "@phone", client.phone },
+                { "@smartphone", client.smartphone },
+                { "@cpf", client.cpf },
+                { "@rg", client.rg }
+            };
 
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@name", client.name);
-                        command.Parameters.AddWithValue("@email", client.email);
-                        command.Parameters.AddWithValue("@phone", client.phone);
-                        command.Parameters.AddWithValue("@smartphone", client.smartphone);
-                        command.Parameters.AddWithValue("@cpf", client.cpf);
-                        command.Parameters.AddWithValue("@rg", client.rg);
+            string query = "INSERT INTO CLIENT (name, email, phone, smartphone, cpf, rg) OUTPUT INSERTED.id VALUES(@name, @email, @phone, @smartphone, @cpf, @rg)";
 
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro ao inserir o cliente: {ex}");
-            }
+            return _db.ExecuteQueryScalar(query, parameters);
         }
 
-        public void Update(Client client) // verificar para casos de atualizações parciais
+
+        public bool Update(Client client)
         {
-            try
+            var parameters = new Dictionary<string, dynamic>
             {
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    const string query = "UPDATE CLIENT SET name = @name, email = @email, phone = @phone, smartphone = @smartphone, cpf = @cpf, rg = @rg WHERE id = @id";
+                { "@name", client.name },
+                { "@email", client.email },
+                { "@phone", client.phone },
+                { "@smartphone", client.smartphone },
+                { "@cpf", client.cpf },
+                { "@rg", client.rg },
+                { "@id", client.id }
+            };
 
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@name", client.name);
-                        command.Parameters.AddWithValue("@email", client.email);
-                        command.Parameters.AddWithValue("@phone", client.phone);
-                        command.Parameters.AddWithValue("@smartphone", client.smartphone);
-                        command.Parameters.AddWithValue("@cpf", client.cpf);
-                        command.Parameters.AddWithValue("@rg", client.rg);
-                        command.Parameters.AddWithValue("@id", client.id);
+            string query = "UPDATE CLIENT SET name = @name, email = @email, phone = @phone, smartphone = @smartphone, cpf = @cpf, rg = @rg WHERE id = @id";
 
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro ao atualizar o cliente: {ex}");
-            }
+            Response<int> response = _db.Execute(query, parameters);
+
+            return response.success && response.affectedRows > 0;
         }
+
 
         public bool DeleteById(int id)
         {
-            try
+            var parameters = new Dictionary<string, dynamic>
             {
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    const string query = "DELETE FROM CLIENT WHERE id = @id";
+                { "@id", id }
+            };
 
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@id", id);
+            Response<int> response = _db.Execute("DELETE FROM CLIENT WHERE id = @id", parameters);
 
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                    }
-                }
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro ao deletar o cliente por id: {ex.Message}", ex);
-            }
+            return response.success && response.affectedRows > 0;
         }
+
     }
 }
