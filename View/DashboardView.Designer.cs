@@ -56,7 +56,7 @@
             this.label3.Location = new System.Drawing.Point(23, 10);
             this.label3.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(138, 32);
+            this.label3.Size = new System.Drawing.Size(171, 41);
             this.label3.TabIndex = 0;
             this.label3.Text = "Dashboard";
             // 
@@ -64,9 +64,9 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(23, 42);
+            this.label4.Location = new System.Drawing.Point(200, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(320, 17);
+            this.label4.Size = new System.Drawing.Size(413, 23);
             this.label4.TabIndex = 2;
             this.label4.Text = "Bem vindo, revise dados importantes do seu negócio";
             // 
@@ -77,7 +77,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.flowLayoutPanel4);
             this.Name = "DashboardView";
-            this.Size = new System.Drawing.Size(965, 596);
+            this.Size = new System.Drawing.Size(965, 800);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel4.PerformLayout();
             this.ResumeLayout(false);

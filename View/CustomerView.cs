@@ -14,13 +14,15 @@ using LitePDV.Service;
 using LitePDV.Model;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace LitePDV.View
 {
     public partial class CustomerView : UserControl
     {
+        String selectedItem;
         private readonly ClientService _service;
-        DataTable table = new DataTable();
+        DataTable clientTable = new DataTable();
         public CustomerView()
         {
             InitializeComponent();
@@ -30,20 +32,20 @@ namespace LitePDV.View
         {
             var clients = _service.GetAll();
 
-            table.Columns.Add("ID");
-            table.Columns.Add("Name");
-            table.Columns.Add("Email");
-            table.Columns.Add("Phone");
-            table.Columns.Add("Smartphone");
-            table.Columns.Add("CPF");
-            table.Columns.Add("RG");
+            clientTable.Columns.Add("ID");
+            clientTable.Columns.Add("Name");
+            clientTable.Columns.Add("Email");
+            clientTable.Columns.Add("Phone");
+            clientTable.Columns.Add("Smartphone");
+            clientTable.Columns.Add("CPF");
+            clientTable.Columns.Add("RG");
 
             foreach (Client client in clients)
             {
-                table.Rows.Add(client.id, client.name, client.email, client.phone, client.smartphone, client.cpf, client.rg);
+                clientTable.Rows.Add(client.id, client.name, client.email, client.phone, client.smartphone, client.cpf, client.rg);
             }
 
-            dataGridView1.DataSource = table;
+            dataGridView1.DataSource = clientTable;
 
             DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
             btn.HeaderText = "Editar Cliente";
@@ -62,7 +64,8 @@ namespace LitePDV.View
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            selectedItem = (sender as System.Windows.Forms.ComboBox).Text;
+            textBox1_TextChanged(sender, e);
         }
 
         private void NewCustomerButton_Click(object sender, EventArgs e)
@@ -75,11 +78,10 @@ namespace LitePDV.View
             if (e.ColumnIndex == dataGridView1.Columns["editarButton"].Index)
             {
                 // Obtém  o valor do ID
-                var cellValue = dataGridView1[columnName:"ID", e.RowIndex].Value;
+                var cellValue = Convert.ToInt32(dataGridView1[columnName: "ID", e.RowIndex].Value);
                 
                 //Como atualizar se esse model está sendo utilizado para inserir 
-                (this.Parent.Parent as LitePDV).showModal(new RegisterCustomerModal());
-                MessageBox.Show($"Id da linha: {cellValue}");
+                (this.Parent.Parent as LitePDV).showModal(new RegisterCustomerModal(cellValue));
             }
 
             if(e.ColumnIndex == dataGridView1.Columns["excluirButton"].Index)
@@ -102,6 +104,43 @@ namespace LitePDV.View
                     MessageBox.Show("Cliente excluído com sucesso!");               
                 }
             }
+        }
+
+        private void flowLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            DataView idDataView = clientTable.DefaultView;
+
+            if (selectedItem != null)
+            {
+                if (selectedItem.Contains("ID"))
+                {
+
+                    idDataView.RowFilter = "ID like '%" + textBox1.Text.Trim() + "%'";
+                    dataGridView1.DataSource = idDataView;
+                }
+
+                if (selectedItem.Contains("Name"))
+                {
+                    idDataView.RowFilter = "Name like '%" + textBox1.Text.Trim() + "%'";
+                    dataGridView1.DataSource = idDataView;
+                }
+
+                if (selectedItem.Contains("CPF"))
+                {
+                    idDataView.RowFilter = "CPF like '%" + textBox1.Text.Trim() + "%'";
+                    dataGridView1.DataSource = idDataView;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selecione critério para continuar");
+            }
+
         }
     }
 }

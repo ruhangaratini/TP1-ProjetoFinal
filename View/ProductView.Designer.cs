@@ -213,7 +213,7 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowTemplate.Height = 24;
-            this.dataGridView2.Size = new System.Drawing.Size(1248, 263);
+            this.dataGridView2.Size = new System.Drawing.Size(1248, 550);
             this.dataGridView2.TabIndex = 3;
             this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
             // 
@@ -225,7 +225,7 @@
             this.Controls.Add(this.Header);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ProductView";
-            this.Size = new System.Drawing.Size(1309, 684);
+            this.Size = new System.Drawing.Size(1309, 800);
             this.Load += new System.EventHandler(this.ProductView_Load);
             this.Header.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);

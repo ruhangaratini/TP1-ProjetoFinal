@@ -36,24 +36,26 @@ namespace LitePDV.Service
             return client;
         }
 
-        public void Insert(Client client)
+        public Response<Client> Insert(Client client)
         {
             string validation = _Validation(client);
 
             if (validation != "Ok")
-                throw new ArgumentNullException(nameof(client), validation);
+                return Response<Client>.FromError(validation);
 
             _repository.Insert(client);
+            return new Response<Client>(client);
         }
 
-        public void Update(Client client)
+        public Response<Client> Update(Client client)
         {
             string validation = _Validation(client);
 
             if (validation != "Ok")
-                throw new ArgumentNullException(nameof(client), validation);
+                return Response<Client>.FromError(validation);
 
             _repository.Update(client);
+            return new Response<Client>(client);
         }
 
         public bool DeleteById(int id)
@@ -74,7 +76,7 @@ namespace LitePDV.Service
             if (client == null)
                 return "O cliente não pode ser nulo.";
 
-            if (client.name == null)
+            if (client.name.Length == 0)
                 return "O nome no cliente não pode ser nulo";
 
             if (!client.email.Contains("@") && client.email != "")

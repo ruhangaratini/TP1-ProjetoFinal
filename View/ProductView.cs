@@ -78,9 +78,8 @@ namespace LitePDV.View
                 // Obtém  o valor do ID
                 var cellValue = dataGridView2[columnName: "ID", e.RowIndex].Value;
 
-                //Como atualizar se esse model está sendo utilizado para inserir 
+                //Chama o model para atualizar dados
                 (this.Parent.Parent as LitePDV).showModal(new RegisterCustomerModal());
-                MessageBox.Show($"Você clicou em: {cellValue}");
             }
 
             if (e.ColumnIndex == dataGridView2.Columns["excluirButton"].Index)

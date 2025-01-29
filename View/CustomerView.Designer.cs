@@ -32,7 +32,7 @@ namespace LitePDV.View
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ComboBox comboBox1;
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,7 +46,6 @@ namespace LitePDV.View
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            comboBox1 = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -58,18 +57,18 @@ namespace LitePDV.View
             // 
             // comboBox1
             // 
-            comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            comboBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            comboBox1.Items.AddRange(new object[] {
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox1.Items.AddRange(new object[] {
             "ID",
-            "Nome",
+            "Name",
             "CPF"});
-            comboBox1.Location = new System.Drawing.Point(44, 32);
-            comboBox1.Margin = new System.Windows.Forms.Padding(4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new System.Drawing.Size(233, 36);
-            comboBox1.TabIndex = 1;
-            comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBox1.Location = new System.Drawing.Point(44, 32);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(233, 36);
+            this.comboBox1.TabIndex = 1;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // flowLayoutPanel1
             // 
@@ -114,11 +113,12 @@ namespace LitePDV.View
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(692, 34);
             this.textBox1.TabIndex = 1;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // flowLayoutPanel3
             // 
             this.flowLayoutPanel3.Controls.Add(this.label2);
-            this.flowLayoutPanel3.Controls.Add(comboBox1);
+            this.flowLayoutPanel3.Controls.Add(this.comboBox1);
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel3.Location = new System.Drawing.Point(761, 0);
             this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
@@ -183,6 +183,7 @@ namespace LitePDV.View
             this.flowLayoutPanel4.Padding = new System.Windows.Forms.Padding(27, 0, 27, 0);
             this.flowLayoutPanel4.Size = new System.Drawing.Size(1307, 65);
             this.flowLayoutPanel4.TabIndex = 3;
+            this.flowLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel4_Paint);
             // 
             // label3
             // 
@@ -217,7 +218,7 @@ namespace LitePDV.View
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1248, 272);
+            this.dataGridView1.Size = new System.Drawing.Size(1248, 550);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -229,7 +230,7 @@ namespace LitePDV.View
             this.Controls.Add(this.Header);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CustomerView";
-            this.Size = new System.Drawing.Size(1315, 638);
+            this.Size = new System.Drawing.Size(1315, 800);
             this.Load += new System.EventHandler(this.CustomerView_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel2.ResumeLayout(false);
@@ -260,5 +261,6 @@ namespace LitePDV.View
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
