@@ -55,30 +55,36 @@ namespace LitePDV.View
             Response<Product> response;
             Product product = new Product();
             product.name = ProductNameInput.Text;
-            product.price = double.Parse(PriceInput.Text);
-            product.stockQuantity = int.Parse(QuantityInput.Text);
+            product.price = double.TryParse(PriceInput.Text, out double price) ? price : 0.0;
+            product.stockQuantity = int.TryParse(QuantityInput.Text, out int quantity) ? quantity : 0;
             product.category = CategoryInput.Text;
             product.description = descriptionBox.Text;
 
-            //if (productId == null)
-            //{
-            //    response = _service.Insert(product);
-            //}
-            //else
-            //{
-            //    product.id = (int)productId;
-            //    response = _service.Update(product);
-            //}
+            if (productId == null)
+            {
+                response = _service.Insert(product);
+            }
+            else
+            {
+                product.id = (int)productId;
+                response = _service.Update(product);
+            }
 
-            _service.Insert(product);
-            MessageBox.Show($"{product.name} inserido(a) com sucesso!");
+            if (!response.success)
+            {
+                MessageBox.Show(response.message);
+                return;
+            }
 
+            String palavra = productId == null ? "inserido" : "atualizado";
+
+            MessageBox.Show($"{product.name} {palavra}(a) com sucesso!");
             ProductNameInput.ResetText();
             CategoryInput.ResetText();
             PriceInput.ResetText();
             QuantityInput.ResetText();
             descriptionBox.ResetText();
-                
+
         }
     }
 }

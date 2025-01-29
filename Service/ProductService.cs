@@ -34,23 +34,26 @@ namespace LitePDV.Service
             return product;
         }
 
-        public void Insert(Product product)
+        public Response<Product> Insert(Product product)
         {
             string validation = _ValidateInsert(product);
 
             if (validation != "Ok")
-                throw new ArgumentNullException(nameof(product), validation);
+                return Response<Product>.FromError(validation);
+
             _repository.Insert(product);
+            return new Response<Product>(product);
         }
 
-        public void Update(Product product)
+        public Response<Product> Update(Product product)
         {
             string validation = _ValidateProduct(product);
 
             if (validation != "Ok")
-                throw new ArgumentNullException(nameof(product), validation);
+                return Response<Product>.FromError(validation);
 
             _repository.Update(product);
+            return new Response<Product>(product);
         }
 
         public bool DeleteById(int id)
