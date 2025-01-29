@@ -24,25 +24,22 @@ namespace LitePDV
             var initDatabaseService = new InitDatabaseService();
 
             //initDatabaseService.InitializeDatabase();
-            var clientUpdated = new Client
-            (
-                id: 2,
-                name: "New test",
-                email: "johnny@email.com",
-                phone: "3333-6060",
-                smartphone: "9999-9999",
-                cpf: "33333300090",
-                rg: "909990008"
-            );
-
             try
             {
-                clientService.Update(clientUpdated);
-                Console.WriteLine("Cliente atualizado com sucesso!");
+                bool product = productService.DeleteById(2);
+
+                if (product)
+                {
+                    Console.WriteLine("Produto deletado com sucesso");
+                }
+                else
+                {
+                    Console.WriteLine("Não existe produto com o ID informado. Verifique e tente novamente.");
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erro ao atualizar o cliente: {ex.Message}");
+                Console.WriteLine($"Erro ao deletar o produto: {ex.Message}");
             }
 
             //Application.EnableVisualStyles();

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LitePDV.Checks
 {
-    internal class Product
+    internal class ProductCheck
     {
         //var productService = new ProductService();
 
@@ -18,12 +18,12 @@ namespace LitePDV.Checks
         //    description: "top product",
         //    price: 1000.00,
         //    stockQuantity: 100,
-        //    status: true
+        //    category: "New test"
         //);
 
         //try
         //{
-        //    productRepository.Insert(novoProduto);
+        //    productService.Insert(novoProduto);
         //    Console.WriteLine("Produto atualizado com sucesso!");
         //}
         //catch (Exception ex)
@@ -35,7 +35,7 @@ namespace LitePDV.Checks
         //try
         //{
         //    var p = productService.GetById(1);
-        //    Console.WriteLine($"ID: {p.id}, Nome: {p.name}, Preço: {p.price:C}, Estoque: {p.stockQuantity}, Status: {(p.status ? "Ativo" : "Inativo")}");
+        //    Console.WriteLine($"ID: {p.id}, Nome: {p.name}, Preço: {p.price:C}, Estoque: {p.stockQuantity}, Status: {p.category}");
         //}
         //catch (Exception ex)
         //{
@@ -46,11 +46,11 @@ namespace LitePDV.Checks
         //var produtoAtualizado = new Product
         //(
         //    id: 1,
-        //    name: "Test validate",
+        //    name: "Test da madruga",
         //    description: "Descrição Atualizada",
         //    price: 1000,
         //    stockQuantity: 20,
-        //    status: true
+        //    category: "teste madruga"
         //);
 
         //try
@@ -63,6 +63,7 @@ namespace LitePDV.Checks
         //    Console.WriteLine($"Erro ao atualizar o produto: {ex.Message}");
         //}
 
+        // get all
         //try
         //{
         //    var produtos = productService.GetAll();
@@ -70,7 +71,7 @@ namespace LitePDV.Checks
         //    Console.WriteLine("Produtos disponíveis:");
         //    foreach (var produto in produtos)
         //    {
-        //        Console.WriteLine($"ID: {produto.id}, Nome: {produto.name}, Preço: {produto.price:C}, Estoque: {produto.stockQuantity}, Status: {(produto.status ? "Ativo" : "Inativo")}");
+        //        Console.WriteLine($"ID: {produto.id}, Nome: {produto.name}, Preço: {produto.price:C}, Estoque: {produto.stockQuantity}, Status: {produto.category}");
         //    }
         //}
         //catch (Exception ex)
