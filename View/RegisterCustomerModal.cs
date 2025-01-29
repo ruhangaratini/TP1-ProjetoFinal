@@ -15,7 +15,8 @@ namespace LitePDV.View
 {
     public partial class RegisterCustomerModal : Form
     {
-        Form parentWindow;
+        private int? clientId;
+
         private readonly ClientService _service;
         public RegisterCustomerModal()
         {
@@ -23,9 +24,18 @@ namespace LitePDV.View
             _service = new ClientService();
         }
 
-        public void setParentWindow(Form form)
+        public RegisterCustomerModal(int id)
         {
-            this.parentWindow = form;
+            InitializeComponent();
+            _service = new ClientService();
+            clientId = id;
+            Client client = _service.GetById(id);
+            NameInput.Text = client.name;
+            EmailInput.Text = client.email;
+            PhoneInput.Text = client.smartphone;
+            TelephoneInput.Text = client.phone;
+            CpfInput.Text = client.cpf;
+            RgInput.Text = client.rg; 
         }
 
         private void RegisterCustomerModal_Load(object sender, EventArgs e)
@@ -65,6 +75,7 @@ namespace LitePDV.View
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            Response<Client> response;
             Client client = new Client();
             client.name = NameInput.Text;
             client.email = EmailInput.Text;
@@ -73,7 +84,14 @@ namespace LitePDV.View
             client.cpf = CpfInput.Text;
             client.rg = RgInput.Text;
 
-            Response<Client> response = _service.Insert(client);
+            if(clientId == null)
+            {
+                response = _service.Insert(client);
+            } else
+            {
+                client.id = (int)clientId;
+                response = _service.Update(client);
+            }
 
             if(!response.success)
             {
@@ -81,14 +99,15 @@ namespace LitePDV.View
                 return;
             }
 
-            MessageBox.Show($"{client.name} inserido(a) com sucesso!");
+            String palavra = clientId == null ? "inserido" : "atualizado";
+
+            MessageBox.Show($"{client.name} {palavra} (a) com sucesso!");
             NameInput.ResetText();
             EmailInput.ResetText();
             TelephoneInput.ResetText();
             PhoneInput.ResetText();
             CpfInput.ResetText();
             RgInput.ResetText();
-            
         }
     }
 }

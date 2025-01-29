@@ -47,14 +47,15 @@ namespace LitePDV.Service
             return new Response<Client>(client);
         }
 
-        public void Update(Client client)
+        public Response<Client> Update(Client client)
         {
             string validation = _Validation(client);
 
             if (validation != "Ok")
-                throw new ArgumentNullException(nameof(client), validation);
+                return Response<Client>.FromError(validation);
 
             _repository.Update(client);
+            return new Response<Client>(client);
         }
 
         public bool DeleteById(int id)
