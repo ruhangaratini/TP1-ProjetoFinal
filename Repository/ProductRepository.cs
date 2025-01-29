@@ -7,187 +7,137 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LitePDV.Model;
+using LitePDV.Config;
+using LitePDV.Checks;
+using System.Reflection.Emit;
 
 namespace LitePDV.Repository
 {
     class ProductRepository
     {
-        private readonly string _connectionString;
+        private static readonly SqlServerConfig _db = new SqlServerConfig();
 
-        public ProductRepository()
+        static void CreateTable()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            _db.Execute(@"
+                CREATE TABLE PRODUCT (
+                    id INT PRIMARY KEY IDENTITY,
+                    name VARCHAR(100) NOT NULL,
+                    description VARCHAR(255) NOT NULL,
+                    price NUMERIC(18, 2) NOT NULL,
+                    stockQuantity INT,
+                    category VARCHAR(100)
+                );
+            ");
         }
+
 
         public List<Product> GetAll()
         {
-            try
+            var products = new List<Product>();
+            Response<List<Dictionary<string, dynamic>>> response = _db.ExecuteQuery("SELECT * FROM PRODUCT");
+
+            if (!response.success || response.data == null)
             {
-                var products = new List<Product>();
-
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    const string query = "SELECT * FROM PRODUCT";
-
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        connection.Open();
-
-                        using (var response = command.ExecuteReader())
-                        {
-                            while (response.Read())
-                            {
-                                var product = new Product
-                                (
-                                    id: Convert.ToInt32(response["id"]),
-                                    name: response["name"].ToString(),
-                                    description: response["description"].ToString(),
-                                    price: Convert.ToDouble(response["price"]),
-                                    stockQuantity: Convert.ToInt32(response["stockQuantity"]),
-                                    category: response["category"].ToString()
-                                );
-
-                                products.Add(product);
-                            }
-                        }
-
-                        connection.Close();
-                    }
-                }
-
-                return products;
+                return null;
             }
-            catch (Exception ex)
+
+            foreach (var row in response.data)
             {
-                throw new Exception($"Erro ao buscar todos os produtos: {ex}");
+                var product = new Product
+                        (
+                            id: Convert.ToInt32(row["id"]),
+                            name: row["name"].ToString(),
+                            description: row["description"].ToString(),
+                            price: Convert.ToDouble(row["price"]),
+                            stockQuantity: Convert.ToInt32(row["stockQuantity"]),
+                            category: row["category"].ToString()
+                        );
+
+                products.Add(product);
             }
+
+            return products;
         }
 
         public Product GetById(int id)
         {
-            try
+            Product product = null;
+
+            var parameter = new Dictionary<string, dynamic>
             {
-                Product product = null; 
+                { "@id", id }
+            };
 
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    const string query = "SELECT id, name, description, price, stockQuantity, category FROM PRODUCT WHERE id = @id";
+            Response<List<Dictionary<string, dynamic>>> response = _db.ExecuteQuery("SELECT * FROM PRODUCT WHERE id = @id", parameter);
 
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@id", id);
-
-                        connection.Open();
-
-                        using (var reader = command.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                product = new Product
-                                (
-                                    id: Convert.ToInt32(reader["id"]),
-                                    name: reader["name"].ToString(),
-                                    description: reader["description"].ToString(),
-                                    price: Convert.ToDouble(reader["price"]),
-                                    stockQuantity: Convert.ToInt32(reader["stockQuantity"]),
-                                    category: reader["category"].ToString()
-                                );
-                            }
-                        }
-
-                        connection.Close();
-                    }
-                }
-
-                return product;
-            }
-            catch (Exception ex)
+            if (!response.success || response.data == null || response.data.Count == 0)
             {
-                throw new Exception($"Erro ao buscar o produto por id: {ex.Message}", ex);
+                return null;
             }
+
+            var row = response.data.First();
+
+            product = new Product
+                        (
+                            id: Convert.ToInt32(row["id"]),
+                            name: row["name"].ToString(),
+                            description: row["description"].ToString(),
+                            price: Convert.ToDouble(row["price"]),
+                            stockQuantity: Convert.ToInt32(row["stockQuantity"]),
+                            category: row["category"].ToString()
+                        );
+
+            return product;
         }
 
-        public void Insert(Product produto)
+        public Response<int> Insert(Product product)
         {
-            try
+            var parameters = new Dictionary<string, dynamic>
             {
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    const string query = "INSERT INTO PRODUCT (name, description, price, stockQuantity, category) VALUES(@name, @description, @price, @stockQuantity, @category)";
+                { "@name", product.name },
+                { "@description", product.description },
+                { "@price", product.price },
+                { "@stockQuantity", product.stockQuantity },
+                { "@category", product.category},
+            };
 
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@name", produto.name);
-                        command.Parameters.AddWithValue("@description", produto.description);
-                        command.Parameters.AddWithValue("@price", produto.price);
-                        command.Parameters.AddWithValue("@stockQuantity", produto.stockQuantity);
-                        command.Parameters.AddWithValue("@category", produto.category);
+            const string query = "INSERT INTO PRODUCT (name, description, price, stockQuantity, category) VALUES(@name, @description, @price, @stockQuantity, @category)";
 
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro no insert product: {ex}");
-            }
+            return _db.ExecuteQueryScalar(query, parameters);
         }
 
-        public void Update(Product produto)
+        public bool Update(Product product)
         {
-            try
+            var parameters = new Dictionary<string, dynamic>
             {
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    const string query = "UPDATE PRODUCT SET name = @name, description = @description, price = @price, stockQuantity = @stockQuantity, category = @category WHERE id = @id";
+                { "@name", product.name },
+                { "@description", product.description },
+                { "@price", product.price },
+                { "@stockQuantity", product.stockQuantity },
+                { "@category", product.category},
+                { "@id", product.id},
+            };
 
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@name", produto.name);
-                        command.Parameters.AddWithValue("@description", produto.description);
-                        command.Parameters.AddWithValue("@price", produto.price);
-                        command.Parameters.AddWithValue("@stockQuantity", produto.stockQuantity);
-                        command.Parameters.AddWithValue("@status", produto.category);
-                        command.Parameters.AddWithValue("@id", produto.id);
+            const string query = "UPDATE PRODUCT SET name = @name, description = @description, price = @price, stockQuantity = @stockQuantity, category = @category WHERE id = @id";
 
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro no update product: {ex}");
-            }
+            Response<int> response = _db.Execute(query, parameters);
+
+            return response.success && response.affectedRows > 0;
         }
 
         public bool DeleteById(int id)
         {
-            try
+            var parameters = new Dictionary<string, dynamic>
             {
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    const string query = "DELETE FROM PRODUCT WHERE id = @id";
+                { "@id", id }
+            };
 
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@id", id);
+            const string query = "DELETE FROM PRODUCT WHERE id = @id";
 
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                    }
-                }
+            Response<int> response = _db.Execute(query, parameters);
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Erro ao deletar o produto por id: {ex.Message}", ex);
-            }
+            return response.success && response.affectedRows > 0;
         }
 
     }

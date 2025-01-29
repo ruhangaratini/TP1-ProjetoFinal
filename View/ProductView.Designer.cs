@@ -58,13 +58,14 @@
             comboBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             comboBox1.Items.AddRange(new object[] {
             "ID",
-            "Nome",
-            "CPF"});
+            "Name",
+            "Category"});
             comboBox1.Location = new System.Drawing.Point(44, 32);
             comboBox1.Margin = new System.Windows.Forms.Padding(4);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new System.Drawing.Size(233, 36);
             comboBox1.TabIndex = 1;
+            comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // Header
             // 
@@ -158,6 +159,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(692, 34);
             this.textBox1.TabIndex = 1;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // flowLayoutPanel3
             // 

@@ -15,6 +15,7 @@ namespace LitePDV.View
 {
     public partial class ProductView : UserControl
     {
+        String selectedItem;
         private readonly ProductService _service;
         DataTable productTable = new DataTable();
         public ProductView()
@@ -76,10 +77,11 @@ namespace LitePDV.View
             if (e.ColumnIndex == dataGridView2.Columns["editarButton"].Index)
             {
                 // Obtém  o valor do ID
-                var cellValue = dataGridView2[columnName: "ID", e.RowIndex].Value;
+                var cellValue = Convert.ToInt32(dataGridView2[columnName: "ID", e.RowIndex].Value);
 
-                //Chama o model para atualizar dados
-                (this.Parent.Parent as LitePDV).showModal(new RegisterCustomerModal());
+
+                //Como atualizar se esse model está sendo utilizado para inserir 
+                (this.Parent.Parent as LitePDV).showModal(new RegisterProductModal(cellValue));
             }
 
             if (e.ColumnIndex == dataGridView2.Columns["excluirButton"].Index)
@@ -101,6 +103,43 @@ namespace LitePDV.View
                     _service.DeleteById(id);
                     MessageBox.Show("Produto excluído com sucesso!");
                 }
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedItem = (sender as System.Windows.Forms.ComboBox).Text;
+            textBox1_TextChanged(sender, e);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            DataView idDataView = productTable.DefaultView;
+
+            if (selectedItem != null)
+            {
+                if (selectedItem.Contains("ID"))
+                {
+
+                    idDataView.RowFilter = "ID like '%" + textBox1.Text.Trim() + "%'";
+                    dataGridView2.DataSource = idDataView;
+                }
+
+                if (selectedItem.Contains("Name"))
+                {
+                    idDataView.RowFilter = "Name like '%" + textBox1.Text.Trim() + "%'";
+                    dataGridView2.DataSource = idDataView;
+                }
+
+                if (selectedItem.Contains("Category"))
+                {
+                    idDataView.RowFilter = "Category like '%" + textBox1.Text.Trim() + "%'";
+                    dataGridView2.DataSource = idDataView;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selecione critério para continuar");
             }
         }
     }

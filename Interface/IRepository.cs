@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LitePDV.Model
 {
-    internal interface IRepository<T>
+    interface IRepository<T>
     {
         List<T> GetAll();
         T GetById(int id);

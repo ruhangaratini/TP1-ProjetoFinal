@@ -68,7 +68,7 @@
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderItem.cs" />
     <Compile Include="Model\Product.cs" />
-    <Compile Include="Model\IRepository.cs" />
+    <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Model\Response.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
