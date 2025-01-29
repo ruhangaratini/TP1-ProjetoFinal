@@ -50,6 +50,7 @@
     <Compile Include="Checks\ClientCheck.cs" />
     <Compile Include="Checks\OrderCheck.cs" />
     <Compile Include="Checks\ProductCheck.cs" />
+    <Compile Include="Components\ComboBoxItem.cs" />
     <Compile Include="Config\SqlServerConfig.cs" />
     <Compile Include="LitePDV.cs">
       <SubType>Form</SubType>
