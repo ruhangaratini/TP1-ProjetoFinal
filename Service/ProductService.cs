@@ -74,7 +74,7 @@ namespace LitePDV.Service
             if (product == null)
                 return "O produto não pode ser nulo.";
 
-            if (product.name == null)
+            if (product.name.Trim().Length == 0)
                 return "O nome no produto não pode ser nulo";
 
             if (product.stockQuantity <= 0)
@@ -91,11 +91,14 @@ namespace LitePDV.Service
             if (product == null)
                 return "O produto não pode ser nulo.";
 
-            if (product.name == null)
+            if (product.name.Trim().Length == 0)
                 return "O nome no produto não pode ser nulo";
 
             if (product.id <= 0)
                 return "O ID do produto deve ser válido.";
+
+            if (product.stockQuantity <= 0)
+                return "Quantidade do produto inválida.";
 
             if (product.price <= 0)
                 return "O preço deve ser maior que zero.";

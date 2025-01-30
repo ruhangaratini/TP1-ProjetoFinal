@@ -11,24 +11,15 @@ namespace LitePDV.Model
         public int quantity {  get; set; }
         public double unitPrice { get; set; }
         public double subtotal { get; set;}
-        public int idProduct { get; set; }
+        public Product product { get; set; }
         public int idOrder { get; set; }
 
-        public OrderItem(int id, int quantity, double unitPrice, double subtotal, int idProduct, int idOrder)
+        public OrderItem(int quantity, double unitPrice, double subtotal, Product product, int idOrder)
         {
             this.quantity = quantity;
             this.unitPrice = unitPrice;
             this.subtotal = subtotal;
-            this.idProduct = idProduct;
-            this.idOrder = idOrder;
-        }
-
-        public OrderItem(int quantity, double unitPrice, double subtotal, int idProduct, int idOrder)
-        {
-            this.quantity = quantity;
-            this.unitPrice = unitPrice;
-            this.subtotal = subtotal;
-            this.idProduct = idProduct;
+            this.product = product;
             this.idOrder = idOrder;
         }
     }

@@ -36,35 +36,26 @@ namespace LitePDV.Service
             return order;
         }
 
-        public void Insert(Order order)
+        public Response<Order> Insert(Order order)
         {
             string validation = _Validation(order);
 
             if (validation != "Ok")
-                throw new ArgumentNullException(nameof(order), validation);
-
-            foreach (var item in order.items)
-            {
-                if (item.quantity <= 0)
-                    throw new ArgumentException("A quantidade de um item deve ser maior que zero.");
-
-                if (item.unitPrice <= 0)
-                    throw new ArgumentException("O preço unitário de um item deve ser maior que zero.");
-
-                order.totalValue += item.subtotal;
-            }
+                return Response<Order>.FromError(validation);
 
             _repository.Insert(order);
+            return new Response<Order>(order);
         }
 
-        public void Update(Order order)
+        public Response<Order> Update(Order order)
         {
             string validation = _Validation(order);
 
-            if (validation != "Ok")
-                throw new ArgumentNullException(nameof(order), validation);
+            if(validation != "Ok")
+                return Response<Order>.FromError(validation);
 
             _repository.Update(order);
+            return new Response<Order>(order);
         }
 
         public bool DeleteById(int id)
@@ -88,8 +79,19 @@ namespace LitePDV.Service
             if (order.items == null || !order.items.Any())
                 return "O pedido deve conter ao menos um item.";
 
-            if (order.paymentMethod == null)
-                return "O nome no ordere não pode ser nulo";    
+            if (order.paymentMethod.Length == 0)
+                return "O método de pagamento não pode ser nulo";
+
+            foreach (var item in order.items)
+            {
+                if (item.quantity <= 0)
+                    return "A quantidade de um item deve ser maior que zero.";
+
+                if (item.unitPrice <= 0)
+                    return "O preço unitário de um item deve ser maior que zero.";
+
+                order.totalValue += item.subtotal;
+            }
 
             return "Ok";
         }

@@ -20,12 +20,13 @@ namespace LitePDV.Model
             items = new List<OrderItem>();
         }
 
-        public Order(int id, DateTime date, double totalValue, string paymentMethod, Client client)
+        public Order(int id, DateTime date, double totalValue, string paymentMethod, List<OrderItem> items, Client client)
         {
             this.id = id;
             this.date = date;
             this.totalValue = totalValue;
             this.paymentMethod = paymentMethod;
+            this.items = items;
             this.client = client;
         }
 

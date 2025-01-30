@@ -28,10 +28,21 @@ namespace LitePDV.View
             InitializeComponent();
             _service = new ClientService();
         }
-        private void CustomerView_Load(object sender, EventArgs e)
+
+        private void loadTable()
         {
             var clients = _service.GetAll();
 
+            foreach (Client client in clients)
+            {
+                clientTable.Rows.Add(client.id, client.name, client.email, client.phone, client.smartphone, client.cpf, client.rg);
+            }
+
+            dataGridView1.DataSource = clientTable;
+        }
+
+        private void CustomerView_Load(object sender, EventArgs e)
+        {
             clientTable.Columns.Add("ID");
             clientTable.Columns.Add("Name");
             clientTable.Columns.Add("Email");
@@ -40,12 +51,7 @@ namespace LitePDV.View
             clientTable.Columns.Add("CPF");
             clientTable.Columns.Add("RG");
 
-            foreach (Client client in clients)
-            {
-                clientTable.Rows.Add(client.id, client.name, client.email, client.phone, client.smartphone, client.cpf, client.rg);
-            }
-
-            dataGridView1.DataSource = clientTable;
+            loadTable();
 
             DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
             btn.HeaderText = "Editar Cliente";
@@ -71,6 +77,10 @@ namespace LitePDV.View
         private void NewCustomerButton_Click(object sender, EventArgs e)
         {
             (this.Parent.Parent as LitePDV).showModal(new RegisterCustomerModal());
+
+            this.clientTable.Clear();
+            loadTable();
+            this.Refresh();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -82,6 +92,10 @@ namespace LitePDV.View
                 
                 //Como atualizar se esse model está sendo utilizado para inserir 
                 (this.Parent.Parent as LitePDV).showModal(new RegisterCustomerModal(cellValue));
+
+                this.clientTable.Clear();
+                loadTable();
+                this.Refresh();
             }
 
             if(e.ColumnIndex == dataGridView1.Columns["excluirButton"].Index)
