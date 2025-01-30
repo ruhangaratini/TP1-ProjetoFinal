@@ -84,6 +84,8 @@ namespace LitePDV.View
             PriceInput.ResetText();
             QuantityInput.ResetText();
             descriptionBox.ResetText();
+
+            this.Close();
         }
     }
 }

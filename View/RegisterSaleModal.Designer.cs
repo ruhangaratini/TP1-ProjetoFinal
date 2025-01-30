@@ -36,6 +36,9 @@
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.CustomerBox = new System.Windows.Forms.ComboBox();
+            this.flowLayoutPanel8 = new System.Windows.Forms.FlowLayoutPanel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.PaymentMethodInput = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -55,6 +58,7 @@
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
+            this.flowLayoutPanel8.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel5.SuspendLayout();
             this.flowLayoutPanel6.SuspendLayout();
@@ -113,6 +117,7 @@
             // flowLayoutPanel2
             // 
             this.flowLayoutPanel2.Controls.Add(this.flowLayoutPanel4);
+            this.flowLayoutPanel2.Controls.Add(this.flowLayoutPanel8);
             this.flowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 84);
             this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
@@ -129,7 +134,7 @@
             this.flowLayoutPanel4.Margin = new System.Windows.Forms.Padding(4);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
             this.flowLayoutPanel4.Padding = new System.Windows.Forms.Padding(40, 0, 40, 0);
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(1333, 85);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(916, 85);
             this.flowLayoutPanel4.TabIndex = 4;
             // 
             // label3
@@ -152,9 +157,49 @@
             this.CustomerBox.Location = new System.Drawing.Point(44, 32);
             this.CustomerBox.Margin = new System.Windows.Forms.Padding(4);
             this.CustomerBox.Name = "CustomerBox";
-            this.CustomerBox.Size = new System.Drawing.Size(1245, 36);
+            this.CustomerBox.Size = new System.Drawing.Size(849, 36);
             this.CustomerBox.TabIndex = 5;
             this.CustomerBox.SelectedIndexChanged += new System.EventHandler(this.CustomerBox_SelectedIndexChanged);
+            // 
+            // flowLayoutPanel8
+            // 
+            this.flowLayoutPanel8.Controls.Add(this.label5);
+            this.flowLayoutPanel8.Controls.Add(this.PaymentMethodInput);
+            this.flowLayoutPanel8.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel8.Location = new System.Drawing.Point(928, 4);
+            this.flowLayoutPanel8.Margin = new System.Windows.Forms.Padding(4);
+            this.flowLayoutPanel8.Name = "flowLayoutPanel8";
+            this.flowLayoutPanel8.Padding = new System.Windows.Forms.Padding(40, 0, 40, 0);
+            this.flowLayoutPanel8.Size = new System.Drawing.Size(365, 84);
+            this.flowLayoutPanel8.TabIndex = 8;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label5.Location = new System.Drawing.Point(44, 0);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(212, 28);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Forma de Pagamento:";
+            // 
+            // PaymentMethodInput
+            // 
+            this.PaymentMethodInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.PaymentMethodInput.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PaymentMethodInput.FormattingEnabled = true;
+            this.PaymentMethodInput.Items.AddRange(new object[] {
+            "Cartão de Crédito",
+            "Cartão de Débito",
+            "Dinheiro",
+            "Pix"});
+            this.PaymentMethodInput.Location = new System.Drawing.Point(44, 32);
+            this.PaymentMethodInput.Margin = new System.Windows.Forms.Padding(4);
+            this.PaymentMethodInput.Name = "PaymentMethodInput";
+            this.PaymentMethodInput.Size = new System.Drawing.Size(287, 36);
+            this.PaymentMethodInput.TabIndex = 8;
             // 
             // flowLayoutPanel3
             // 
@@ -201,6 +246,7 @@
             this.ProductBox.Margin = new System.Windows.Forms.Padding(4);
             this.ProductBox.Name = "ProductBox";
             this.ProductBox.Size = new System.Drawing.Size(675, 36);
+            this.ProductBox.TabIndex = 7;
             // 
             // flowLayoutPanel6
             // 
@@ -360,6 +406,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(1156, 34);
             this.textBox1.TabIndex = 8;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // RegisterSaleModal
             // 
@@ -381,6 +428,8 @@
             this.flowLayoutPanel2.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel4.PerformLayout();
+            this.flowLayoutPanel8.ResumeLayout(false);
+            this.flowLayoutPanel8.PerformLayout();
             this.flowLayoutPanel3.ResumeLayout(false);
             this.flowLayoutPanel5.ResumeLayout(false);
             this.flowLayoutPanel5.PerformLayout();
@@ -422,5 +471,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel8;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox PaymentMethodInput;
     }
 }

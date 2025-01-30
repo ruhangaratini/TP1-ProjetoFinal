@@ -263,7 +263,7 @@ namespace LitePDV.View
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ComboBox comboBox1;
+        public System.Windows.Forms.DataGridView dataGridView1;
     }
 }

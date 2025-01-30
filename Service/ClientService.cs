@@ -4,7 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace LitePDV.Service
 {
@@ -76,16 +79,16 @@ namespace LitePDV.Service
             if (client == null)
                 return "O cliente não pode ser nulo.";
 
-            if (client.name.Length == 0)
+            if (client.name.Trim().Length == 0)
                 return "O nome no cliente não pode ser nulo";
 
-            if (!client.email.Contains("@") && client.email != "")
+            if (!Regex.IsMatch(client.email, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
                 return "Email inválido. Verifique e tente novamente.";
 
-            if (client.cpf.Length < 11 && client.cpf != "")
+            if (client.cpf.Contains(" ") && client.cpf != "")
                 return "CPF inválido. Verifique e tente novamente.";
 
-            if (client.rg.Length < 9 && client.rg != "")
+            if (client.rg.Trim().Contains(" ") && client.rg.Replace(",", "").Replace("-","").Trim().Length > 0)
                 return "RG inválido. Verifique e tente novamente.";
 
             return "Ok";

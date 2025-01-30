@@ -37,9 +37,12 @@ namespace LitePDV.Repository
                                             i.quantity,
                                             i.unitPrice,
                                             i.subtotal,
-                                            i.idProduct
+                                            i.idProduct,
+                                            c.name AS clientName,
+                                            p.name AS productName
                                         FROM ORDERS o
-                                        JOIN ORDER_ITEMS i ON o.id = i.idOrder
+                                        INNER JOIN ORDER_ITEMS i ON o.id = i.idOrder
+                                        INNER JOIN PRODUCT p ON p.id = i.idProduct
                                         JOIN CLIENT c ON o.idClient = c.id";
 
                     using (var command = new SqlCommand(query, connection))
@@ -54,25 +57,33 @@ namespace LitePDV.Repository
 
                                 if (!orderDict.ContainsKey(orderId))
                                 {
+                                    Client client = new Client();
+                                    client.name = response["clientName"].ToString();
+
                                     var order = new Order
                                     (
                                         id: orderId,
                                         date: Convert.ToDateTime(response["date"]),
                                         totalValue: Convert.ToDouble(response["totalValue"]),
                                         paymentMethod: response["paymentMethod"].ToString(),
-                                        client : null
+                                        items: new List<OrderItem>(),
+                                        client: client
                                     );
 
                                     orderDict.Add(orderId, order);
                                     orders.Add(order);
                                 }
 
+                                Product product = new Product();
+                                product.id = Convert.ToInt32(response["idProduct"]);
+                                product.name = response["productName"].ToString();
+
                                 var orderItem = new OrderItem
                                 (
                                     quantity: Convert.ToInt32(response["quantity"]),
                                     unitPrice: Convert.ToDouble(response["unitPrice"]),
                                     subtotal: Convert.ToDouble(response["subtotal"]),
-                                    idProduct: Convert.ToInt32(response["idProduct"]),
+                                    product: product,
                                     idOrder: orderId
                                 );
 
@@ -103,9 +114,12 @@ namespace LitePDV.Repository
                 {
                     const string query = @"
                 SELECT
-                    *
+                    *,
+                    c.name AS clientName,
+                    p.name AS productName
                 FROM ORDERS o
                 LEFT JOIN ORDER_ITEMS i ON o.id = i.idOrder
+                LEFT JOIN PRODUCT p ON p.id = i.idProduct
                 INNER JOIN CLIENT c ON c.id = o.idClient
                 WHERE o.id = @id";
 
@@ -125,9 +139,10 @@ namespace LitePDV.Repository
                                     date: Convert.ToDateTime(reader["date"]),
                                     totalValue: Convert.ToDouble(reader["totalValue"]),
                                     paymentMethod: reader["paymentMethod"].ToString(),
+                                    items: new List<OrderItem>(),
                                     client: new Client(
                                         id: Convert.ToInt32(reader["idClient"]),
-                                        name: reader["name"].ToString(),
+                                        name: reader["clientName"].ToString(),
                                         email: reader["email"].ToString(),
                                         phone: reader["phone"].ToString(),
                                         smartphone: reader["smartphone"].ToString(),
@@ -138,12 +153,16 @@ namespace LitePDV.Repository
 
                                 do
                                 {
+                                    Product aux = new Product();
+                                    aux.id = Convert.ToInt32(reader["idProduct"]);
+                                    aux.name = reader["productName"].ToString();
+
                                     var orderItem = new OrderItem
                                     (
                                         quantity: Convert.ToInt32(reader["quantity"]),
                                         unitPrice: Convert.ToDouble(reader["unitPrice"]),
                                         subtotal: Convert.ToDouble(reader["subtotal"]),
-                                        idProduct: Convert.ToInt32(reader["idProduct"]),
+                                        product: aux,
                                         idOrder: Convert.ToInt32(reader["id"])
                                     );
 
@@ -195,7 +214,7 @@ namespace LitePDV.Repository
                             command.Parameters.AddWithValue("@quantity", item.quantity);
                             command.Parameters.AddWithValue("@unitPrice", item.unitPrice);
                             command.Parameters.AddWithValue("@subtotal", item.subtotal);
-                            command.Parameters.AddWithValue("@idProduct", item.idProduct);
+                            command.Parameters.AddWithValue("@idProduct", item.product.id);
                             command.Parameters.AddWithValue("@idOrder", order.id);
 
                             command.ExecuteNonQuery();
@@ -217,18 +236,45 @@ namespace LitePDV.Repository
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    const string query = "UPDATE ORDERS SET totalValue = @totalValue, paymentMethod = @paymentMethod WHERE id = @id";
+                    string query = "UPDATE ORDERS SET totalValue = @totalValue, paymentMethod = @paymentMethod, idClient = @idClient WHERE id = @id";
+                    connection.Open();
 
                     using (var command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@totalValue", order.totalValue);
                         command.Parameters.AddWithValue("@paymentMethod", order.paymentMethod);
+                        command.Parameters.AddWithValue("@idClient", order.client.id);
                         command.Parameters.AddWithValue("@id", order.id);
 
-                        connection.Open();
                         command.ExecuteNonQuery();
-                        connection.Close();
                     }
+
+                    query = "DELETE FROM ORDER_ITEMS WHERE idOrder = @id";
+
+                    using (var command = new SqlCommand(query, connection)) {
+                        command.Parameters.AddWithValue("@id", order.id);
+
+                        command.ExecuteNonQuery();
+                    }
+
+                    foreach (var item in order.items)
+                    {
+                        const string queryItem = "INSERT INTO ORDER_ITEMS (quantity, unitPrice, subtotal, idProduct, idOrder) " +
+                                                 "VALUES(@quantity, @unitPrice, @subtotal, @idProduct, @idOrder)";
+
+                        using (var command = new SqlCommand(queryItem, connection))
+                        {
+                            command.Parameters.AddWithValue("@quantity", item.quantity);
+                            command.Parameters.AddWithValue("@unitPrice", item.unitPrice);
+                            command.Parameters.AddWithValue("@subtotal", item.subtotal);
+                            command.Parameters.AddWithValue("@idProduct", item.product.id);
+                            command.Parameters.AddWithValue("@idOrder", order.id);
+
+                            command.ExecuteNonQuery();
+                        }
+                    }
+
+                    connection.Close();
                 }
             }
             catch (Exception ex)

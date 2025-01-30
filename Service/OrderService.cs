@@ -36,27 +36,6 @@ namespace LitePDV.Service
             return order;
         }
 
-        //public void Insert(Order order)
-        //{
-        //    string validation = _Validation(order);
-
-        //    if (validation != "Ok")
-        //        throw new ArgumentNullException(nameof(order), validation);
-
-        //    foreach (var item in order.items)
-        //    {
-        //        if (item.quantity <= 0)
-        //            throw new ArgumentException("A quantidade de um item deve ser maior que zero.");
-
-        //        if (item.unitPrice <= 0)
-        //            throw new ArgumentException("O preço unitário de um item deve ser maior que zero.");
-
-        //        order.totalValue += item.subtotal;
-        //    }
-
-        //    _repository.Insert(order);
-        //}
-
         public Response<Order> Insert(Order order)
         {
             string validation = _Validation(order);
@@ -78,15 +57,6 @@ namespace LitePDV.Service
             _repository.Update(order);
             return new Response<Order>(order);
         }
-        //public void Update(Order order)
-        //{
-        //    string validation = _Validation(order);
-
-        //    if (validation != "Ok")
-        //        throw new ArgumentNullException(nameof(order), validation);
-
-        //    _repository.Update(order);
-        //}
 
         public bool DeleteById(int id)
         {
@@ -109,8 +79,8 @@ namespace LitePDV.Service
             if (order.items == null || !order.items.Any())
                 return "O pedido deve conter ao menos um item.";
 
-            if (order.paymentMethod == null)
-                return "O metodo de pagamento não pode ser nulo";
+            if (order.paymentMethod.Length == 0)
+                return "O método de pagamento não pode ser nulo";
 
             foreach (var item in order.items)
             {

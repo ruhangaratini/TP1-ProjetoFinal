@@ -16,38 +16,44 @@ namespace LitePDV.View
     {
         private readonly OrderService _service;
         private DataTable _dataTable = new DataTable();
+        String selectedItem;
         public SaleView()
         {
             InitializeComponent();
             _service = new OrderService();
         }
 
-        private void NewSaleButton_Click(object sender, EventArgs e)
-        {
-            (this.Parent.Parent as LitePDV).showModal(new RegisterSaleModal());
-        }
-
         private void NewSaleButton_Click_1(object sender, EventArgs e)
         {
             (this.Parent.Parent as LitePDV).showModal(new RegisterSaleModal());
+
+            this._dataTable.Clear();
+            loadTable();
+            this.dataGridView1.Refresh();
+        }
+
+        public void loadTable()
+        {
+            var orders = _service.GetAll();
+
+            foreach (Order order in orders)
+            {
+                string clientName = order.client != null ? order.client.name : "Sem Cliente";
+                _dataTable.Rows.Add(order.id, clientName, order.totalValue, order.paymentMethod, order.date);
+            }
+
+            dataGridView1.DataSource = _dataTable;
         }
 
         private void SaleView_Load(object sender, EventArgs e)
         {
-            var orders = _service.GetAll();
-
             _dataTable.Columns.Add("ID");
             _dataTable.Columns.Add("Cliente");
             _dataTable.Columns.Add("Valor total");
             _dataTable.Columns.Add("Método de pagamento");
             _dataTable.Columns.Add("Data");
 
-            foreach (Order order in orders) {
-                string clientName = order.client != null ? order.client.name : "Sem Cliente";
-                _dataTable.Rows.Add(order.id, clientName, order.totalValue, order.paymentMethod, order.date);
-            }
-
-            dataGridView1.DataSource = _dataTable;
+            loadTable();
 
             DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
             btn.HeaderText = "Editar Venda";
@@ -72,6 +78,10 @@ namespace LitePDV.View
                 var cellValue = Convert.ToInt32(dataGridView1[columnName: "ID", e.RowIndex].Value);
 
                 (this.Parent.Parent as LitePDV).showModal(new RegisterSaleModal(cellValue));
+
+                this._dataTable.Clear();
+                loadTable();
+                this.dataGridView1.Refresh();
             }
 
             if (e.ColumnIndex == dataGridView1.Columns["excluirButton"].Index)
@@ -93,6 +103,37 @@ namespace LitePDV.View
                     _service.DeleteById(id);
                     MessageBox.Show("Produto excluído com sucesso!");
                 }
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedItem = (sender as System.Windows.Forms.ComboBox).Text;
+            textBox1_TextChanged(sender, e);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            DataView idDataView = _dataTable.DefaultView;
+
+            if (selectedItem != null)
+            {
+                if (selectedItem.Contains("ID"))
+                {
+
+                    idDataView.RowFilter = "ID like '%" + textBox1.Text.Trim() + "%'";
+                    dataGridView1.DataSource = idDataView;
+                }
+
+                if (selectedItem.Contains("Cliente"))
+                {
+                    idDataView.RowFilter = "Cliente like '%" + textBox1.Text.Trim() + "%'";
+                    dataGridView1.DataSource = idDataView;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Selecione critério para continuar");
             }
         }
     }

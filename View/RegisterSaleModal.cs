@@ -20,7 +20,7 @@ namespace LitePDV.View
         private readonly ProductService _productService = new ProductService();
         private DataTable _dataTable = new DataTable();
         private String selectedClient;
-        private int? _orderId;
+        private Order _order;
 
         public RegisterSaleModal()
         {
@@ -30,7 +30,7 @@ namespace LitePDV.View
         public RegisterSaleModal(int id)
         {
             InitializeComponent();
-            _orderId = id;
+            _order = _orderService.GetById(id);
         }
 
         private void CloseForm_Click(object sender, EventArgs e)
@@ -51,6 +51,13 @@ namespace LitePDV.View
             CustomerBox.DataSource = clients;
             CustomerBox.DisplayMember = "Name";
             CustomerBox.ValueMember = "ID";
+
+            if(_order != null)
+            {
+                CustomerBox.SelectedIndex = clients.FindIndex((c => c.id == _order.client.id));
+            }
+
+            PaymentMethodInput.SelectedItem = _order?.paymentMethod ?? "Cartão de Crédito";
 
             foreach (var product in products)
             {
@@ -96,6 +103,14 @@ namespace LitePDV.View
             _dataTable.Columns.Add("Quantidade");
             _dataTable.Columns.Add("Valor Total");
 
+            if(_order != null)
+            {
+                foreach(var item in _order.items)
+                {
+                    _dataTable.Rows.Add(item.product.id, item.product.name, item.unitPrice, item.quantity, item.subtotal);
+                }
+            }
+
             dataGridView1.DataSource = _dataTable;
 
             DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
@@ -138,11 +153,13 @@ namespace LitePDV.View
 
             foreach (DataRow row in _dataTable.Rows)
             {
+                Product product = new Product();
+                product.id = Convert.ToInt32(row["ID"]);
                 items.Add(new OrderItem(
                     quantity: Convert.ToInt32(row["Quantidade"]),
                     unitPrice: Convert.ToDouble(row["Valor Unitário"]),
                     subtotal: Convert.ToDouble(row["Valor Total"]),
-                    idProduct: Convert.ToInt32(row["ID"]),
+                    product: product,
                     idOrder: 0
                 ));
             }
@@ -150,16 +167,16 @@ namespace LitePDV.View
             order.client = _clientService.GetById(Convert.ToInt16(CustomerBox.SelectedValue));
             order.date = DateTime.Now;
             order.totalValue = 0;
-            order.paymentMethod = "Aleatório";
+            order.paymentMethod = PaymentMethodInput.Text;
             order.items = items;
 
-            if (_orderId == null)
+            if (_order == null)
             {
                 response = _orderService.Insert(order);
             }
             else
             {
-                order.id = (int)_orderId;
+                order.id = _order.id;
                 response = _orderService.Update(order);
             }
 
@@ -169,24 +186,35 @@ namespace LitePDV.View
                 return;
             }
 
-            String palavra = _orderId == null ? "inserida" : "atualizada";
+            String palavra = _order == null ? "inserida" : "atualizada";
             MessageBox.Show($"Venda {palavra} com sucesso!");
 
             foreach (Product product in products)
             {
                 foreach(OrderItem item in items){
-                    if(product.id == item.idProduct)
+                    if(product.id == item.product.id)
                     {
                         product.stockQuantity = product.stockQuantity - item.quantity;
                         _productService.Update(product);
                     }
                 }
             }
+
+            this.Close();
         }
 
         private void CustomerBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedClient = (sender as System.Windows.Forms.ComboBox).Text;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            DataView idDataView = _dataTable.DefaultView;
+
+            idDataView.RowFilter = "Produto like '%" + textBox1.Text.Trim() + "%'";
+            dataGridView1.DataSource = idDataView;
+            
         }
     }
 }

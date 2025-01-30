@@ -16,7 +16,6 @@ namespace LitePDV.View
     public partial class RegisterCustomerModal : Form
     {
         private int? clientId;
-
         private readonly ClientService _service;
         public RegisterCustomerModal()
         {
@@ -35,7 +34,7 @@ namespace LitePDV.View
             PhoneInput.Text = client.smartphone;
             TelephoneInput.Text = client.phone;
             CpfInput.Text = client.cpf;
-            RgInput.Text = client.rg; 
+            RgInput.Text = client.rg;
         }
 
         private void RegisterCustomerModal_Load(object sender, EventArgs e)
@@ -102,12 +101,7 @@ namespace LitePDV.View
             String palavra = clientId == null ? "inserido" : "atualizado";
 
             MessageBox.Show($"{client.name} {palavra} (a) com sucesso!");
-            NameInput.ResetText();
-            EmailInput.ResetText();
-            TelephoneInput.ResetText();
-            PhoneInput.ResetText();
-            CpfInput.ResetText();
-            RgInput.ResetText();
+            this.Close();
         }
     }
 }

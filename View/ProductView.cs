@@ -24,16 +24,9 @@ namespace LitePDV.View
             _service = new ProductService();
         }
 
-        private void ProductView_Load(object sender, EventArgs e)
+        public void loadTable()
         {
             var products = _service.GetAll();
-
-            productTable.Columns.Add("ID");
-            productTable.Columns.Add("Name");
-            productTable.Columns.Add("Description");
-            productTable.Columns.Add("Price");
-            productTable.Columns.Add("stockQuantity");
-            productTable.Columns.Add("Category");
 
             foreach (Product product in products)
             {
@@ -41,6 +34,18 @@ namespace LitePDV.View
             }
 
             dataGridView2.DataSource = productTable;
+        }
+
+        private void ProductView_Load(object sender, EventArgs e)
+        {
+            productTable.Columns.Add("ID");
+            productTable.Columns.Add("Name");
+            productTable.Columns.Add("Description");
+            productTable.Columns.Add("Price");
+            productTable.Columns.Add("stockQuantity");
+            productTable.Columns.Add("Category");
+
+            loadTable();
 
             DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
             btn.HeaderText = "Editar Cliente";
@@ -70,6 +75,10 @@ namespace LitePDV.View
         private void NewProductButton_Click_1(object sender, EventArgs e)
         {
             (this.Parent.Parent as LitePDV).showModal(new RegisterProductModal());
+
+            this.productTable.Clear();
+            loadTable();
+            this.dataGridView2.Refresh();
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -82,6 +91,10 @@ namespace LitePDV.View
 
                 //Como atualizar se esse model está sendo utilizado para inserir 
                 (this.Parent.Parent as LitePDV).showModal(new RegisterProductModal(cellValue));
+
+                this.productTable.Clear();
+                loadTable();
+                this.dataGridView2.Refresh();
             }
 
             if (e.ColumnIndex == dataGridView2.Columns["excluirButton"].Index)
