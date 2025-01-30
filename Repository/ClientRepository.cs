@@ -59,7 +59,6 @@ namespace LitePDV.Repository
             return clients;
         }
 
-
         public Client GetById(int id)
         {
             Client client = null;
@@ -70,6 +69,38 @@ namespace LitePDV.Repository
             };
 
             Response<List<Dictionary<string, dynamic>>> response = _db.ExecuteQuery("SELECT * FROM CLIENT WHERE id = @id", parameter);
+
+            if (!response.success || response.data == null || response.data.Count == 0)
+            {
+                return null;
+            }
+
+            var row = response.data.First();
+
+            client = new Client
+            (
+                id: Convert.ToInt32(row["id"]),
+                name: row["name"]?.ToString(),
+                email: row["email"]?.ToString(),
+                phone: row["phone"]?.ToString(),
+                smartphone: row["smartphone"]?.ToString(),
+                cpf: row["cpf"]?.ToString(),
+                rg: row["rg"]?.ToString()
+            );
+
+            return client;
+        }
+
+        public Client GetByCPF(string cpf)
+        {
+            Client client = null;
+
+            var parameter = new Dictionary<string, dynamic>
+            {
+                { "@cpf", cpf }
+            };
+
+            Response<List<Dictionary<string, dynamic>>> response = _db.ExecuteQuery("SELECT * FROM CLIENT WHERE cpf = @cpf", parameter);
 
             if (!response.success || response.data == null || response.data.Count == 0)
             {

@@ -31,7 +31,6 @@ namespace LitePDV.Repository
             ");
         }
 
-
         public List<Product> GetAll()
         {
             var products = new List<Product>();
